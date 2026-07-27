@@ -39,7 +39,7 @@
       </section>
 
       <section class="tarjeta reveal-section" ref="sectionEstados">
-        <h2 class="titulo-seccion">🔬 Los Tres Estados de la Materia</h2>
+        <h2 class="titulo-seccion">Los Tres Estados de la Materia</h2>
         <p class="intro-descripcion">La materia existe en tres estados principales, cada uno con propiedades únicas que determinan cómo interactúa con el mundo que nos rodea.</p>
         <div class="estados-grid">
           <div
@@ -70,32 +70,43 @@
       </section>
 
       <section class="tarjeta reveal-section" ref="sectionTransformaciones">
-        <h2 class="titulo-seccion">⚡ Las 6 Transformaciones</h2>
+        <h2 class="titulo-seccion">Las 6 Transformaciones</h2>
         <p class="intro-descripcion">Cuando la materia cambia de estado, lo hace a través de procesos físicos que dependen de la energía, la temperatura y la presión.</p>
-        <div class="transformaciones-grid">
+        <div class="transformaciones-lista">
           <div
-            class="transform-card"
+            class="transform-row"
             v-for="(t, idx) in transformaciones"
             :key="idx"
             ref="transformCards"
           >
-            <div class="transform-icono">{{ t.icono }}</div>
-            <div class="transform-nombres">
-              <span class="transform-desde">{{ t.desde }}</span>
-              <span class="transform-flecha">→</span>
-              <span class="transform-hacia">{{ t.hacia }}</span>
+            <div class="transform-visual">
+              <svg viewBox="0 0 320 100" class="transform-svg">
+                <g v-html="t.svg"></g>
+              </svg>
             </div>
-            <h4>{{ t.nombre }}</h4>
-            <p>{{ t.descripcion }}</p>
-            <div class="transform-ejemplo">
-              <span class="ejemplo-label">Cotidiano:</span> {{ t.ejemplo }}
+            <div class="transform-info">
+              <div class="transform-header">
+                <h4>{{ t.nombre }}</h4>
+                <span class="transform-tag" :class="t.tipoClase">{{ t.tipo }}</span>
+              </div>
+              <div class="transform-nombres">
+                <span class="transform-desde">{{ t.desde }}</span>
+                <span class="transform-flecha">
+                  <svg width="24" height="12" viewBox="0 0 24 12"><path d="M0 6h20M16 1l5 5-5 5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <span class="transform-hacia">{{ t.hacia }}</span>
+              </div>
+              <p>{{ t.descripcion }}</p>
+              <div class="transform-ejemplo">
+                <span class="ejemplo-label">Ejemplo:</span> {{ t.ejemplo }}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       <section class="tarjeta reveal-section" ref="sectionObjetivos">
-        <h2 class="titulo-seccion">🎯 ¿Qué vas a aprender?</h2>
+        <h2 class="titulo-seccion">Que vas a aprender</h2>
         <div class="grid grid-2 learn-grid">
           <div
             class="learn-card"
@@ -107,7 +118,7 @@
           >
             <div class="learn-card-glow"></div>
             <div class="learn-card-content">
-              <div class="learn-icon">{{ obj.icono }}</div>
+              <div class="learn-num">{{ obj.icono }}</div>
               <h3>{{ obj.titulo }}</h3>
               <p>{{ obj.descripcion }}</p>
             </div>
@@ -116,7 +127,7 @@
       </section>
 
       <section class="tarjeta reveal-section" ref="sectionEncuesta">
-        <h2 class="titulo-seccion">❓ ¿Qué sabes ya?</h2>
+        <h2 class="titulo-seccion">Que sabes ya</h2>
         <p class="intro-descripcion">Pon a prueba tus conocimientos antes de empezar.</p>
         <div class="encuesta">
           <p class="pregunta">{{ encuesta.pregunta }}</p>
@@ -138,14 +149,14 @@
             </button>
           </div>
           <div v-if="encuesta.respondido" class="mensaje" :class="encuesta.correcta === encuesta.seleccionada ? 'mensaje-exito' : 'mensaje-error'">
-            <strong>{{ encuesta.correcta === encuesta.seleccionada ? '¡Correcto!' : 'Inténtalo de nuevo' }}</strong>
+            <strong>{{ encuesta.correcta === encuesta.seleccionada ? 'Correcto!' : 'Intenta de nuevo' }}</strong>
             <br>{{ encuesta.explicacion }}
           </div>
         </div>
       </section>
 
       <section class="tarjeta reveal-section" ref="sectionChecklist">
-        <h2 class="titulo-seccion">⚡ Antes de continuar</h2>
+        <h2 class="titulo-seccion">Antes de continuar</h2>
         <div class="checklist">
           <label class="check-item" v-for="(item, idx) in checklist" :key="idx">
             <input type="checkbox" v-model="checklist[idx].hecho" />
@@ -299,19 +310,332 @@ export default {
     ]
 
     const transformaciones = [
-      { nombre: 'Fusión', icono: '🧊→💧', desde: 'Sólido', hacia: 'Líquido', descripcion: 'El sólido absorbe calor y sus partículas se liberan.', ejemplo: 'Hielo derritiéndose en agua' },
-      { nombre: 'Solidificación', icono: '💧🧊', desde: 'Líquido', hacia: 'Sólido', descripcion: 'El líquido pierde calor y sus partículas se compactan.', ejemplo: 'Agua congelándose en el freezer' },
-      { nombre: 'Vaporización', icono: '💧→☁️', desde: 'Líquido', hacia: 'Gaseoso', descripcion: 'El líquido se calienta hasta convertirse en gas.', ejemplo: 'Agua hirviendo formando vapor' },
-      { nombre: 'Condensación', icono: '☁️→💧', desde: 'Gaseoso', hacia: 'Líquido', descripcion: 'El gas pierde calor y vuelve a estado líquido.', ejemplo: 'Vapor formando gotas en un espejo' },
-      { nombre: 'Sublimación', icono: '🧊→☁️', desde: 'Sólido', hacia: 'Gaseoso', descripcion: 'El sólido pasa directamente a gas sin ser líquido.', ejemplo: 'Hielo seco humeando' },
-      { nombre: 'Sublimación inversa', icono: '☁️→🧊', desde: 'Gaseoso', hacia: 'Sólido', descripcion: 'El gas pasa directamente a sólido sin ser líquido.', ejemplo: 'Escarcha formándose en ventanas frías' }
+      {
+        nombre: 'Fusion',
+        tipo: 'Calor',
+        tipoClase: 'tipo-calor',
+        desde: 'Solido',
+        hacia: 'Liquido',
+        descripcion: 'El solido absorbe calor y sus particulas se liberan, fluyendo con mayor libertad.',
+        ejemplo: 'Hielo derritiendose en agua',
+        svg: `
+          <g transform="translate(10,0)">
+            <rect x="30" y="35" width="16" height="16" rx="2" fill="#4fc3f7" opacity="0.9">
+              <animate attributeName="y" values="35;33;35" dur="1.2s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="50" y="35" width="16" height="16" rx="2" fill="#4fc3f7" opacity="0.9">
+              <animate attributeName="y" values="35;37;35" dur="1.4s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="70" y="35" width="16" height="16" rx="2" fill="#4fc3f7" opacity="0.9">
+              <animate attributeName="y" values="35;34;35" dur="1.1s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="40" y="55" width="16" height="16" rx="2" fill="#4fc3f7" opacity="0.9">
+              <animate attributeName="y" values="55;57;55" dur="1.3s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="60" y="55" width="16" height="16" rx="2" fill="#4fc3f7" opacity="0.9">
+              <animate attributeName="y" values="55;53;55" dur="1.5s" repeatCount="indefinite"/>
+            </rect>
+          </g>
+          <g transform="translate(140,0)">
+            <circle cx="30" cy="50" r="5" fill="#4fc3f7" opacity="0.8">
+              <animate attributeName="cy" values="50;65;55;70;50" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="cx" values="30;35;25;32;30" dur="2s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="55" cy="45" r="5" fill="#4fc3f7" opacity="0.8">
+              <animate attributeName="cy" values="45;60;50;65;45" dur="2.3s" repeatCount="indefinite"/>
+              <animate attributeName="cx" values="55;60;48;58;55" dur="2.3s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="80" cy="55" r="4" fill="#4fc3f7" opacity="0.7">
+              <animate attributeName="cy" values="55;70;60;75;55" dur="1.8s" repeatCount="indefinite"/>
+              <animate attributeName="cx" values="80;85;75;82;80" dur="1.8s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="105" cy="48" r="5" fill="#4fc3f7" opacity="0.8">
+              <animate attributeName="cy" values="48;63;53;68;48" dur="2.1s" repeatCount="indefinite"/>
+              <animate attributeName="cx" values="105;110;100;108;105" dur="2.1s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="65" cy="68" r="4" fill="#4fc3f7" opacity="0.7">
+              <animate attributeName="cy" values="68;80;72;85;68" dur="2.5s" repeatCount="indefinite"/>
+            </circle>
+          </g>
+          <g>
+            <text x="130" y="15" fill="#ff6f00" font-size="12" font-weight="bold" text-anchor="middle">Calor</text>
+            <line x1="110" y1="18" x2="150" y2="18" stroke="#ff6f00" stroke-width="2" marker-end="url(#arrowOrange)"/>
+            <rect x="90" y="5" width="12" height="12" rx="1" fill="#4fc3f7" opacity="0.5"/>
+            <rect x="108" y="8" width="10" height="10" rx="1" fill="#4fc3f7" opacity="0.5"/>
+            <path d="M85 11 L90 11" stroke="#ff6f00" stroke-width="1" stroke-dasharray="2,2"/>
+            <rect x="155" y="5" width="12" height="12" rx="6" fill="#4fc3f7" opacity="0.5"/>
+            <rect x="173" y="8" width="10" height="10" rx="5" fill="#4fc3f7" opacity="0.5"/>
+            <path d="M170 11 L173 11" stroke="#ff6f00" stroke-width="1" stroke-dasharray="2,2"/>
+          </g>
+        `
+      },
+      {
+        nombre: 'Solidificacion',
+        tipo: 'Enfriamiento',
+        tipoClase: 'tipo-frio',
+        desde: 'Liquido',
+        hacia: 'Solido',
+        descripcion: 'El liquido pierde calor y sus particulas se compactan hasta formar una estructura rigida.',
+        ejemplo: 'Agua congelandose en el freezer',
+        svg: `
+          <g transform="translate(10,0)">
+            <circle cx="30" cy="55" r="5" fill="#4fc3f7" opacity="0.8">
+              <animate attributeName="cy" values="55;60;52;58;55" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="cx" values="30;33;27;31;30" dur="2s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="55" cy="50" r="5" fill="#4fc3f7" opacity="0.8">
+              <animate attributeName="cy" values="50;55;48;53;50" dur="2.2s" repeatCount="indefinite"/>
+              <animate attributeName="cx" values="55;58;52;56;55" dur="2.2s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="80" cy="60" r="4" fill="#4fc3f7" opacity="0.7">
+              <animate attributeName="cy" values="60;65;57;63;60" dur="1.8s" repeatCount="indefinite"/>
+              <animate attributeName="cx" values="80;83;77;81;80" dur="1.8s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="105" cy="52" r="5" fill="#4fc3f7" opacity="0.8">
+              <animate attributeName="cy" values="52;57;50;55;52" dur="2.1s" repeatCount="indefinite"/>
+            </circle>
+          </g>
+          <g transform="translate(140,0)">
+            <rect x="30" y="40" width="14" height="14" rx="2" fill="#4fc3f7" opacity="0.9">
+              <animate attributeName="y" values="40;38;40" dur="1.5s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="48" y="40" width="14" height="14" rx="2" fill="#4fc3f7" opacity="0.9">
+              <animate attributeName="y" values="40;42;40" dur="1.7s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="66" y="40" width="14" height="14" rx="2" fill="#4fc3f7" opacity="0.9">
+              <animate attributeName="y" values="40;39;40" dur="1.3s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="39" y="58" width="14" height="14" rx="2" fill="#4fc3f7" opacity="0.9">
+              <animate attributeName="y" values="58;60;58" dur="1.6s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="57" y="58" width="14" height="14" rx="2" fill="#4fc3f7" opacity="0.9">
+              <animate attributeName="y" values="58;56;58" dur="1.4s" repeatCount="indefinite"/>
+            </rect>
+          </g>
+          <g>
+            <text x="130" y="15" fill="#58a6ff" font-size="10" font-weight="bold" text-anchor="middle">Frio</text>
+            <line x1="150" y1="18" x2="110" y2="18" stroke="#58a6ff" stroke-width="2" marker-end="url(#arrowBlue)"/>
+            <rect x="88" y="5" width="12" height="12" rx="6" fill="#4fc3f7" opacity="0.5"/>
+            <rect x="155" y="5" width="12" height="12" rx="1" fill="#4fc3f7" opacity="0.5"/>
+          </g>
+        `
+      },
+      {
+        nombre: 'Vaporizacion',
+        tipo: 'Calor intenso',
+        tipoClase: 'tipo-calor',
+        desde: 'Liquido',
+        hacia: 'Gaseoso',
+        descripcion: 'El liquido se calienta hasta que sus particulas ganan suficiente energia para separarse completamente.',
+        ejemplo: 'Agua hirviendo formando vapor',
+        svg: `
+          <g transform="translate(10,0)">
+            <circle cx="30" cy="65" r="5" fill="#4fc3f7" opacity="0.8">
+              <animate attributeName="cy" values="65;68;62;66;65" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="cx" values="30;33;28;31;30" dur="2s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="55" cy="60" r="5" fill="#4fc3f7" opacity="0.8">
+              <animate attributeName="cy" values="60;63;58;61;60" dur="2.2s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="80" cy="70" r="4" fill="#4fc3f7" opacity="0.7">
+              <animate attributeName="cy" values="70;73;68;71;70" dur="1.8s" repeatCount="indefinite"/>
+            </circle>
+            <ellipse cx="65" cy="80" rx="50" ry="6" fill="#4fc3f7" opacity="0.2"/>
+          </g>
+          <g transform="translate(140,0)">
+            <circle cx="30" cy="45" r="4" fill="#4fc3f7" opacity="0.6">
+              <animate attributeName="cy" values="45;25;55;15;45" dur="3s" repeatCount="indefinite"/>
+              <animate attributeName="cx" values="30;38;22;35;30" dur="3s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="60" cy="50" r="3" fill="#4fc3f7" opacity="0.5">
+              <animate attributeName="cy" values="50;30;60;20;50" dur="2.5s" repeatCount="indefinite"/>
+              <animate attributeName="cx" values="60;68;52;65;60" dur="2.5s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="90" cy="40" r="4" fill="#4fc3f7" opacity="0.6">
+              <animate attributeName="cy" values="40;20;50;10;40" dur="3.5s" repeatCount="indefinite"/>
+              <animate attributeName="cx" values="90;98;82;95;90" dur="3.5s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="50" cy="30" r="3" fill="#4fc3f7" opacity="0.4">
+              <animate attributeName="cy" values="30;10;40;5;30" dur="2.8s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="75" cy="55" r="3" fill="#4fc3f7" opacity="0.5">
+              <animate attributeName="cy" values="55;35;65;25;55" dur="2.3s" repeatCount="indefinite"/>
+            </circle>
+          </g>
+          <g>
+            <text x="130" y="95" fill="#ff6f00" font-size="12" font-weight="bold" text-anchor="middle">Calor</text>
+            <line x1="130" y1="90" x2="130" y2="75" stroke="#ff6f00" stroke-width="2" marker-end="url(#arrowOrangeUp)"/>
+          </g>
+        `
+      },
+      {
+        nombre: 'Condensacion',
+        tipo: 'Enfriamiento',
+        tipoClase: 'tipo-frio',
+        desde: 'Gaseoso',
+        hacia: 'Liquido',
+        descripcion: 'El gas pierde energia calorifica y sus particulas se agrupan hasta formar un liquido.',
+        ejemplo: 'Vapor formando gotas en un espejo',
+        svg: `
+          <g transform="translate(10,0)">
+            <circle cx="30" cy="30" r="4" fill="#4fc3f7" opacity="0.5">
+              <animate attributeName="cy" values="30;50;20;55;30" dur="3s" repeatCount="indefinite"/>
+              <animate attributeName="cx" values="30;38;22;35;30" dur="3s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="60" cy="25" r="3" fill="#4fc3f7" opacity="0.4">
+              <animate attributeName="cy" values="25;45;15;50;25" dur="2.8s" repeatCount="indefinite"/>
+              <animate attributeName="cx" values="60;68;52;65;60" dur="2.8s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="90" cy="35" r="4" fill="#4fc3f7" opacity="0.5">
+              <animate attributeName="cy" values="35;55;25;60;35" dur="3.2s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="45" cy="20" r="3" fill="#4fc3f7" opacity="0.4">
+              <animate attributeName="cy" values="20;40;10;45;20" dur="2.5s" repeatCount="indefinite"/>
+            </circle>
+          </g>
+          <g transform="translate(140,0)">
+            <circle cx="30" cy="65" r="5" fill="#4fc3f7" opacity="0.8">
+              <animate attributeName="cy" values="65;68;63;67;65" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="cx" values="30;33;28;31;30" dur="2s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="55" cy="60" r="5" fill="#4fc3f7" opacity="0.8">
+              <animate attributeName="cy" values="60;63;58;61;60" dur="2.2s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="80" cy="68" r="4" fill="#4fc3f7" opacity="0.7">
+              <animate attributeName="cy" values="68;71;66;69;68" dur="1.8s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="105" cy="62" r="5" fill="#4fc3f7" opacity="0.8">
+              <animate attributeName="cy" values="62;65;60;63;62" dur="2.1s" repeatCount="indefinite"/>
+            </circle>
+            <ellipse cx="70" cy="78" rx="50" ry="6" fill="#4fc3f7" opacity="0.2"/>
+          </g>
+          <g>
+            <text x="130" y="15" fill="#58a6ff" font-size="10" font-weight="bold" text-anchor="middle">Frio</text>
+            <line x1="130" y1="18" x2="130" y2="35" stroke="#58a6ff" stroke-width="2" marker-end="url(#arrowBlueDown)"/>
+          </g>
+        `
+      },
+      {
+        nombre: 'Sublimacion',
+        tipo: 'Calor especial',
+        tipoClase: 'tipo-calor',
+        desde: 'Solido',
+        hacia: 'Gaseoso',
+        descripcion: 'El solido pasa directamente a gas sin pasar por el estado liquido, absorbiendo energia.',
+        ejemplo: 'Hielo seco humeando',
+        svg: `
+          <g transform="translate(10,0)">
+            <rect x="45" y="55" width="14" height="14" rx="2" fill="#4fc3f7" opacity="0.9">
+              <animate attributeName="y" values="55;53;55" dur="1.5s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="63" y="55" width="14" height="14" rx="2" fill="#4fc3f7" opacity="0.9">
+              <animate attributeName="y" values="55;57;55" dur="1.7s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="81" y="55" width="14" height="14" rx="2" fill="#4fc3f7" opacity="0.9">
+              <animate attributeName="y" values="55;54;55" dur="1.3s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="54" y="73" width="14" height="14" rx="2" fill="#4fc3f7" opacity="0.9">
+              <animate attributeName="y" values="73;75;73" dur="1.6s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="72" y="73" width="14" height="14" rx="2" fill="#4fc3f7" opacity="0.9">
+              <animate attributeName="y" values="73;71;73" dur="1.4s" repeatCount="indefinite"/>
+            </rect>
+          </g>
+          <g transform="translate(140,0)">
+            <circle cx="40" cy="35" r="4" fill="#4fc3f7" opacity="0.6">
+              <animate attributeName="cy" values="35;15;50;10;35" dur="3.5s" repeatCount="indefinite"/>
+              <animate attributeName="cx" values="40;50;30;48;40" dur="3.5s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="70" cy="40" r="3" fill="#4fc3f7" opacity="0.5">
+              <animate attributeName="cy" values="40;20;55;15;40" dur="3s" repeatCount="indefinite"/>
+              <animate attributeName="cx" values="70;80;60;75;70" dur="3s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="100" cy="30" r="4" fill="#4fc3f7" opacity="0.6">
+              <animate attributeName="cy" values="30;10;45;5;30" dur="4s" repeatCount="indefinite"/>
+              <animate attributeName="cx" values="100;110;90;105;100" dur="4s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="55" cy="20" r="3" fill="#4fc3f7" opacity="0.4">
+              <animate attributeName="cy" values="20;5;35;0;20" dur="2.8s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="85" cy="45" r="3" fill="#4fc3f7" opacity="0.5">
+              <animate attributeName="cy" values="45;25;58;20;45" dur="2.5s" repeatCount="indefinite"/>
+            </circle>
+          </g>
+          <g>
+            <text x="130" y="95" fill="#ff6f00" font-size="12" font-weight="bold" text-anchor="middle">Calor</text>
+            <line x1="130" y1="90" x2="130" y2="75" stroke="#ff6f00" stroke-width="2"/>
+            <polygon points="127,75 130,68 133,75" fill="#ff6f00"/>
+          </g>
+        `
+      },
+      {
+        nombre: 'Sublimacion Inversa',
+        tipo: 'Enfriamiento',
+        tipoClase: 'tipo-frio',
+        desde: 'Gaseoso',
+        hacia: 'Solido',
+        descripcion: 'El gas pasa directamente a solido sin ser liquido, depositandose sobre una superficie fria.',
+        ejemplo: 'Escarcha formandose en ventanas frias',
+        svg: `
+          <g transform="translate(10,0)">
+            <circle cx="40" cy="25" r="4" fill="#4fc3f7" opacity="0.5">
+              <animate attributeName="cy" values="25;45;15;50;25" dur="3s" repeatCount="indefinite"/>
+              <animate attributeName="cx" values="40;50;30;48;40" dur="3s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="70" cy="30" r="3" fill="#4fc3f7" opacity="0.4">
+              <animate attributeName="cy" values="30;50;20;55;30" dur="2.8s" repeatCount="indefinite"/>
+              <animate attributeName="cx" values="70;80;60;75;70" dur="2.8s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="100" cy="20" r="4" fill="#4fc3f7" opacity="0.5">
+              <animate attributeName="cy" values="20;40;10;45;20" dur="3.2s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="55" cy="15" r="3" fill="#4fc3f7" opacity="0.4">
+              <animate attributeName="cy" values="15;35;5;40;15" dur="2.5s" repeatCount="indefinite"/>
+            </circle>
+          </g>
+          <g transform="translate(140,0)">
+            <rect x="30" y="55" width="12" height="12" rx="2" fill="#4fc3f7" opacity="0.9">
+              <animate attributeName="y" values="55;53;55" dur="1.5s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="46" y="55" width="12" height="12" rx="2" fill="#4fc3f7" opacity="0.9">
+              <animate attributeName="y" values="55;57;55" dur="1.7s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="62" y="55" width="12" height="12" rx="2" fill="#4fc3f7" opacity="0.9">
+              <animate attributeName="y" values="55;54;55" dur="1.3s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="78" y="55" width="12" height="12" rx="2" fill="#4fc3f7" opacity="0.9">
+              <animate attributeName="y" values="55;56;55" dur="1.6s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="94" y="55" width="12" height="12" rx="2" fill="#4fc3f7" opacity="0.9">
+              <animate attributeName="y" values="55;54;55" dur="1.4s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="38" y="71" width="12" height="12" rx="2" fill="#4fc3f7" opacity="0.9">
+              <animate attributeName="y" values="71;73;71" dur="1.5s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="54" y="71" width="12" height="12" rx="2" fill="#4fc3f7" opacity="0.9">
+              <animate attributeName="y" values="71;69;71" dur="1.8s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="70" y="71" width="12" height="12" rx="2" fill="#4fc3f7" opacity="0.9">
+              <animate attributeName="y" values="71;72;71" dur="1.2s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="86" y="71" width="12" height="12" rx="2" fill="#4fc3f7" opacity="0.9">
+              <animate attributeName="y" values="71;70;71" dur="1.6s" repeatCount="indefinite"/>
+            </rect>
+          </g>
+          <g>
+            <text x="130" y="15" fill="#58a6ff" font-size="10" font-weight="bold" text-anchor="middle">Frio</text>
+            <line x1="130" y1="18" x2="130" y2="35" stroke="#58a6ff" stroke-width="2"/>
+            <polygon points="127,35 130,42 133,35" fill="#58a6ff"/>
+          </g>
+        `
+      }
     ]
 
     const objetivos = [
-      { icono: '🔍', titulo: 'Identificar', descripcion: 'Los seis cambios de estado de la materia y sus características' },
-      { icono: '⚡', titulo: 'Comprender', descripcion: 'Qué factores provocan cada transformación: energía, temperatura y presión' },
-      { icono: '🔗', titulo: 'Aplicar', descripcion: 'Reconocer cambios de estado en ejemplos cotidianos de tu entorno' },
-      { icono: '🧠', titulo: 'Analizar', descripcion: 'Diferenciar entre cambios físicos (de estado) y cambios químicos' }
+      { icono: '01', titulo: 'Identificar', descripcion: 'Los seis cambios de estado de la materia y sus caracteristicas' },
+      { icono: '02', titulo: 'Comprender', descripcion: 'Que factores provocan cada transformacion: energia, temperatura y presion' },
+      { icono: '03', titulo: 'Aplicar', descripcion: 'Reconocer cambios de estado en ejemplos cotidianos de tu entorno' },
+      { icono: '04', titulo: 'Analizar', descripcion: 'Diferenciar entre cambios fisicos (de estado) y cambios quimicos' }
     ]
 
     function onTilt(e, key) {
@@ -357,7 +681,7 @@ export default {
           if (entry.isIntersecting) {
             gsap.fromTo(entry.target, { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' })
 
-            const cards = entry.target.querySelectorAll('.estado-card, .transform-card, .learn-card')
+            const cards = entry.target.querySelectorAll('.estado-card, .transform-row, .learn-card')
             if (cards.length) {
               gsap.fromTo(cards, { opacity: 0, y: 40, scale: 0.95 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.12, delay: 0.3, ease: 'back.out(1.2)' })
             }
@@ -580,37 +904,90 @@ export default {
   font-weight: 600;
 }
 
-.transformaciones-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+.transformaciones-lista {
+  display: flex;
+  flex-direction: column;
   gap: var(--espaciado-mediano);
 }
 
-.transform-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(48, 54, 61, 0.5);
-  border-radius: var(--radio-borde);
+.transform-row {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: var(--espaciado-grande);
+  align-items: center;
   padding: var(--espaciado-mediano);
+  border-radius: var(--radio-borde);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(48, 54, 61, 0.4);
   transition: var(--transition);
   cursor: default;
 }
 
-.transform-card:hover {
-  border-color: var(--color-primario);
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(46, 125, 50, 0.15);
+.transform-row:hover {
+  border-color: rgba(46, 125, 50, 0.4);
+  background: rgba(46, 125, 50, 0.03);
+  box-shadow: 0 4px 20px rgba(46, 125, 50, 0.1);
+  transform: translateX(4px);
 }
 
-.transform-icono {
-  font-size: 1.8rem;
-  margin-bottom: var(--espaciado-pequeño);
+.transform-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(79, 195, 247, 0.04);
+  border-radius: 8px;
+  padding: var(--espaciado-pequeño);
+  border: 1px solid rgba(79, 195, 247, 0.1);
+}
+
+.transform-svg {
+  width: 100%;
+  height: 100px;
+}
+
+.transform-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.transform-header {
+  display: flex;
+  align-items: center;
+  gap: var(--espaciado-mediano);
+}
+
+.transform-header h4 {
+  color: var(--color-blanco);
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.transform-tag {
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tipo-calor {
+  background: rgba(255, 111, 0, 0.15);
+  color: #ff6f00;
+  border: 1px solid rgba(255, 111, 0, 0.3);
+}
+
+.tipo-frio {
+  background: rgba(88, 166, 255, 0.15);
+  color: #58a6ff;
+  border: 1px solid rgba(88, 166, 255, 0.3);
 }
 
 .transform-nombres {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
+  gap: 10px;
   font-size: 0.85rem;
 }
 
@@ -621,7 +998,8 @@ export default {
 
 .transform-flecha {
   color: var(--color-accento);
-  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
 }
 
 .transform-hacia {
@@ -629,17 +1007,11 @@ export default {
   font-weight: 600;
 }
 
-.transform-card h4 {
-  color: var(--color-blanco);
-  margin-bottom: 6px;
-  font-size: 1rem;
-}
-
-.transform-card p {
+.transform-info p {
   color: var(--color-texto-claro);
   font-size: 0.85rem;
   line-height: 1.5;
-  margin-bottom: 8px;
+  margin: 0;
 }
 
 .transform-ejemplo {
@@ -648,6 +1020,8 @@ export default {
   background: rgba(255, 255, 255, 0.03);
   padding: 6px 10px;
   border-radius: 6px;
+  display: inline-block;
+  align-self: flex-start;
 }
 
 .ejemplo-label {
@@ -698,6 +1072,28 @@ export default {
 .learn-icon {
   font-size: 2rem;
   margin-bottom: var(--espaciado-mediano);
+}
+
+.learn-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(46, 125, 50, 0.3), rgba(46, 125, 50, 0.1));
+  border: 2px solid rgba(46, 125, 50, 0.4);
+  color: var(--color-primario);
+  font-size: 0.9rem;
+  font-weight: 800;
+  margin-bottom: var(--espaciado-mediano);
+  transition: var(--transition);
+}
+
+.learn-card:hover .learn-num {
+  background: var(--color-primario);
+  color: #ffffff;
+  transform: scale(1.1);
 }
 
 .learn-card h3 {
@@ -875,8 +1271,13 @@ export default {
     grid-template-columns: 1fr;
   }
 
-  .transformaciones-grid {
+  .transform-row {
     grid-template-columns: 1fr;
+  }
+
+  .transform-visual {
+    max-width: 280px;
+    margin: 0 auto;
   }
 }
 </style>
