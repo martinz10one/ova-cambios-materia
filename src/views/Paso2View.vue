@@ -8,84 +8,53 @@
         <h2 class="titulo-seccion">Las 6 Transformaciones de la Materia</h2>
         <p class="intro-descripcion">La materia cambia de estado cuando se le aplica o retira energia calorifica. Explora cada transformacion en el diagrama interactivo.</p>
 
-        <div class="diagrama-container">
-          <div class="estados-circulos">
-            <div class="circulo-estado circulo-solido" @mouseenter="hoverEstado = 'solido'" @mouseleave="hoverEstado = null">
-              <div class="circulo-icono">
-                <svg viewBox="0 0 60 60">
-                  <rect x="10" y="10" width="12" height="12" rx="2" fill="#4fc3f7" opacity="0.9"><animate attributeName="x" values="10;12;10" dur="2s" repeatCount="indefinite"/></rect>
-                  <rect x="26" y="10" width="12" height="12" rx="2" fill="#4fc3f7" opacity="0.9"><animate attributeName="y" values="10;8;10" dur="2.5s" repeatCount="indefinite"/></rect>
-                  <rect x="42" y="10" width="12" height="12" rx="2" fill="#4fc3f7" opacity="0.9"><animate attributeName="x" values="42;44;42" dur="1.8s" repeatCount="indefinite"/></rect>
-                  <rect x="18" y="26" width="12" height="12" rx="2" fill="#4fc3f7" opacity="0.9"><animate attributeName="y" values="26;24;26" dur="2.2s" repeatCount="indefinite"/></rect>
-                  <rect x="34" y="26" width="12" height="12" rx="2" fill="#4fc3f7" opacity="0.9"><animate attributeName="x" values="34;36;34" dur="1.5s" repeatCount="indefinite"/></rect>
-                  <rect x="10" y="42" width="12" height="12" rx="2" fill="#4fc3f7" opacity="0.9"><animate attributeName="y" values="42;40;42" dur="2.8s" repeatCount="indefinite"/></rect>
-                  <rect x="26" y="42" width="12" height="12" rx="2" fill="#4fc3f7" opacity="0.9"><animate attributeName="x" values="26;28;26" dur="1.3s" repeatCount="indefinite"/></rect>
-                  <rect x="42" y="42" width="12" height="12" rx="2" fill="#4fc3f7" opacity="0.9"><animate attributeName="y" values="42;44;42" dur="2s" repeatCount="indefinite"/></rect>
-                </svg>
-              </div>
-              <span class="circulo-label">Solido</span>
+        <div class="diagrama-redisenado">
+          <div class="estados-trio">
+            <div class="estado-badge badge-solido">
+              <svg viewBox="0 0 40 40" width="40" height="40">
+                <rect x="8" y="8" width="8" height="8" rx="1" fill="#4fc3f7" opacity="0.9"><animate attributeName="x" values="8;10;8" dur="2s" repeatCount="indefinite"/></rect>
+                <rect x="18" y="8" width="8" height="8" rx="1" fill="#4fc3f7" opacity="0.9"><animate attributeName="y" values="8;6;8" dur="2.5s" repeatCount="indefinite"/></rect>
+                <rect x="28" y="8" width="6" height="6" rx="1" fill="#4fc3f7" opacity="0.9"><animate attributeName="x" values="28;30;28" dur="1.8s" repeatCount="indefinite"/></rect>
+                <rect x="13" y="18" width="8" height="8" rx="1" fill="#4fc3f7" opacity="0.9"><animate attributeName="y" values="18;16;18" dur="2.2s" repeatCount="indefinite"/></rect>
+                <rect x="23" y="18" width="8" height="8" rx="1" fill="#4fc3f7" opacity="0.9"><animate attributeName="x" values="23;25;23" dur="1.5s" repeatCount="indefinite"/></rect>
+                <rect x="8" y="28" width="8" height="8" rx="1" fill="#4fc3f7" opacity="0.9"><animate attributeName="y" values="28;26;28" dur="2.8s" repeatCount="indefinite"/></rect>
+                <rect x="18" y="28" width="8" height="8" rx="1" fill="#4fc3f7" opacity="0.9"><animate attributeName="x" values="18;20;18" dur="1.3s" repeatCount="indefinite"/></rect>
+              </svg>
+              <span>Solido</span>
             </div>
-
-            <div class="estado-conexion fusion-conn">
-              <div class="conn-label conn-calor" @click="showDetalle(0)">Fusion</div>
-              <div class="conn-line"></div>
-              <div class="conn-arrow">+Calor</div>
+            <div class="estado-flechas">
+              <button class="flecha-btn flecha-abajo-calor" @click="showDetalle(0)">Fusion <span>+Calor</span></button>
+              <button class="flecha-btn flecha-abajo-frio" @click="showDetalle(1)">Solidificacion <span>-Calor</span></button>
             </div>
-            <div class="estado-conexion solid-conn">
-              <div class="conn-label conn-frio" @click="showDetalle(1)">Solidificacion</div>
-              <div class="conn-line"></div>
-              <div class="conn-arrow">-Calor</div>
+            <div class="estado-badge badge-liquido">
+              <svg viewBox="0 0 40 40" width="40" height="40">
+                <circle cx="12" cy="16" r="4" fill="#4fc3f7" opacity="0.8"><animate attributeName="cy" values="16;20;14;18;16" dur="2s" repeatCount="indefinite"/></circle>
+                <circle cx="22" cy="14" r="4" fill="#4fc3f7" opacity="0.8"><animate attributeName="cy" values="14;18;12;16;14" dur="2.5s" repeatCount="indefinite"/></circle>
+                <circle cx="32" cy="18" r="3" fill="#4fc3f7" opacity="0.7"><animate attributeName="cy" values="18;22;16;20;18" dur="3s" repeatCount="indefinite"/></circle>
+                <circle cx="17" cy="24" r="3" fill="#4fc3f7" opacity="0.7"><animate attributeName="cy" values="24;28;22;26;24" dur="2.8s" repeatCount="indefinite"/></circle>
+                <circle cx="27" cy="22" r="4" fill="#4fc3f7" opacity="0.8"><animate attributeName="cy" values="22;26;20;24;22" dur="3.2s" repeatCount="indefinite"/></circle>
+                <ellipse cx="20" cy="32" rx="18" ry="4" fill="#4fc3f7" opacity="0.12"></ellipse>
+              </svg>
+              <span>Liquido</span>
             </div>
-
-            <div class="circulo-estado circulo-liquido" @mouseenter="hoverEstado = 'liquido'" @mouseleave="hoverEstado = null">
-              <div class="circulo-icono">
-                <svg viewBox="0 0 60 60">
-                  <circle cx="15" cy="25" r="5" fill="#4fc3f7" opacity="0.8"><animate attributeName="cy" values="25;30;23;28;25" dur="3s" repeatCount="indefinite"/></circle>
-                  <circle cx="30" cy="22" r="5" fill="#4fc3f7" opacity="0.8"><animate attributeName="cy" values="22;27;20;25;22" dur="2.5s" repeatCount="indefinite"/></circle>
-                  <circle cx="45" cy="28" r="4" fill="#4fc3f7" opacity="0.7"><animate attributeName="cy" values="28;33;26;31;28" dur="3.5s" repeatCount="indefinite"/></circle>
-                  <circle cx="22" cy="35" r="4" fill="#4fc3f7" opacity="0.7"><animate attributeName="cy" values="35;40;33;38;35" dur="2.8s" repeatCount="indefinite"/></circle>
-                  <circle cx="38" cy="32" r="5" fill="#4fc3f7" opacity="0.8"><animate attributeName="cy" values="32;37;30;35;32" dur="3.2s" repeatCount="indefinite"/></circle>
-                  <ellipse cx="30" cy="45" rx="28" ry="5" fill="#4fc3f7" opacity="0.15"></ellipse>
-                </svg>
-              </div>
-              <span class="circulo-label">Liquido</span>
+            <div class="estado-flechas">
+              <button class="flecha-btn flecha-abajo-calor" @click="showDetalle(2)">Vaporizacion <span>+Calor</span></button>
+              <button class="flecha-btn flecha-abajo-frio" @click="showDetalle(3)">Condensacion <span>-Calor</span></button>
             </div>
-
-            <div class="estado-conexion vap-conn">
-              <div class="conn-label conn-calor" @click="showDetalle(2)">Vaporizacion</div>
-              <div class="conn-line"></div>
-              <div class="conn-arrow">+Calor</div>
+            <div class="estado-badge badge-gas">
+              <svg viewBox="0 0 40 40" width="40" height="40">
+                <circle cx="12" cy="12" r="3" fill="#4fc3f7" opacity="0.5"><animate attributeName="cy" values="12;5;18;3;12" dur="3.5s" repeatCount="indefinite"/><animate attributeName="cx" values="12;18;8;15;12" dur="3.5s" repeatCount="indefinite"/></circle>
+                <circle cx="28" cy="10" r="3" fill="#4fc3f7" opacity="0.4"><animate attributeName="cy" values="10;3;16;1;10" dur="3s" repeatCount="indefinite"/></circle>
+                <circle cx="18" cy="18" r="3" fill="#4fc3f7" opacity="0.5"><animate attributeName="cy" values="18;11;24;9;18" dur="4s" repeatCount="indefinite"/></circle>
+                <circle cx="32" cy="24" r="3" fill="#4fc3f7" opacity="0.4"><animate attributeName="cy" values="24;17;30;15;24" dur="3.8s" repeatCount="indefinite"/></circle>
+                <circle cx="8" cy="26" r="3" fill="#4fc3f7" opacity="0.4"><animate attributeName="cy" values="26;19;32;17;26" dur="4.2s" repeatCount="indefinite"/></circle>
+              </svg>
+              <span>Gaseoso</span>
             </div>
-            <div class="estado-conexion cond-conn">
-              <div class="conn-label conn-frio" @click="showDetalle(3)">Condensacion</div>
-              <div class="conn-line"></div>
-              <div class="conn-arrow">-Calor</div>
-            </div>
-
-            <div class="circulo-estado circulo-gas" @mouseenter="hoverEstado = 'gas'" @mouseleave="hoverEstado = null">
-              <div class="circulo-icono">
-                <svg viewBox="0 0 60 60">
-                  <circle cx="15" cy="20" r="4" fill="#4fc3f7" opacity="0.5"><animate attributeName="cy" values="20;10;30;5;20" dur="4s" repeatCount="indefinite"/><animate attributeName="cx" values="15;25;5;20;15" dur="4s" repeatCount="indefinite"/></circle>
-                  <circle cx="42" cy="15" r="3" fill="#4fc3f7" opacity="0.4"><animate attributeName="cy" values="15;5;25;2;15" dur="3.5s" repeatCount="indefinite"/></circle>
-                  <circle cx="28" cy="25" r="4" fill="#4fc3f7" opacity="0.5"><animate attributeName="cy" values="25;15;35;10;25" dur="4.5s" repeatCount="indefinite"/><animate attributeName="cx" values="28;38;18;33;28" dur="4.5s" repeatCount="indefinite"/></circle>
-                  <circle cx="48" cy="35" r="3" fill="#4fc3f7" opacity="0.4"><animate attributeName="cy" values="35;25;45;20;35" dur="3.8s" repeatCount="indefinite"/></circle>
-                  <circle cx="10" cy="38" r="3" fill="#4fc3f7" opacity="0.4"><animate attributeName="cy" values="38;28;48;23;38" dur="4.2s" repeatCount="indefinite"/></circle>
-                  <circle cx="35" cy="10" r="3" fill="#4fc3f7" opacity="0.4"><animate attributeName="cy" values="10;2;18;0;10" dur="3s" repeatCount="indefinite"/></circle>
-                </svg>
-              </div>
-              <span class="circulo-label">Gaseoso</span>
-            </div>
-
-            <div class="estado-conexion sub-conn">
-              <div class="conn-label conn-calor" @click="showDetalle(4)">Sublimacion</div>
-              <div class="conn-line"></div>
-              <div class="conn-arrow">+Calor</div>
-            </div>
-            <div class="estado-conexion subi-conn">
-              <div class="conn-label conn-frio" @click="showDetalle(5)">Subl. Inversa</div>
-              <div class="conn-line"></div>
-              <div class="conn-arrow">-Calor</div>
-            </div>
+          </div>
+          <div class="sublimacion-row">
+            <button class="flecha-btn flecha-lado-calor" @click="showDetalle(4)">Sublimacion <span>+Calor</span></button>
+            <button class="flecha-btn flecha-lado-frio" @click="showDetalle(5)">Sublimacion Inversa <span>-Calor</span></button>
           </div>
         </div>
       </section>
@@ -333,100 +302,140 @@ export default {
   min-height: 100vh;
 }
 
-.diagrama-container {
-  display: flex;
-  justify-content: center;
-  padding: var(--espaciado-enorme) 0;
-  overflow-x: auto;
-}
-
-.estados-circulos {
-  display: flex;
-  align-items: center;
-  gap: var(--espaciado-mediano);
-  flex-wrap: nowrap;
-  padding: 20px 0;
-}
-
-.circulo-estado {
+.diagrama-redisenado {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--espaciado-pequeño);
-  padding: var(--espaciado-mediano);
+  gap: var(--espaciado-mediano);
+  padding: var(--espaciado-mediano) 0;
+}
+
+.estados-trio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espaciado-mediano);
+  width: 100%;
+  max-width: 400px;
+}
+
+.estado-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--espaciado-mediano);
+  padding: var(--espaciado-mediano) var(--espaciado-grande);
   border-radius: var(--radio-borde);
-  background: rgba(255, 255, 255, 0.03);
-  border: 2px solid rgba(48, 54, 61, 0.5);
-  min-width: 100px;
+  border: 2px solid rgba(79, 195, 247, 0.4);
+  background: rgba(79, 195, 247, 0.05);
+  width: 100%;
+  justify-content: center;
   transition: var(--transition);
-  cursor: default;
 }
 
-.circulo-estado:hover {
-  border-color: var(--color-primario);
-  box-shadow: 0 0 20px rgba(46, 125, 50, 0.15);
-  transform: scale(1.05);
-}
-
-.circulo-icono {
-  width: 70px;
-  height: 70px;
-}
-
-.circulo-label {
+.estado-badge span {
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--color-blanco);
-  font-size: 0.95rem;
 }
 
-.estado-conexion {
+.estado-flechas {
+  display: flex;
+  gap: var(--espaciado-mediano);
+  width: 100%;
+  justify-content: center;
+}
+
+.flecha-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  min-width: 90px;
-}
-
-.conn-label {
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 0.7rem;
-  font-weight: 700;
+  padding: 8px 16px;
+  border: 1px solid rgba(48, 54, 61, 0.5);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--color-blanco);
+  font-size: 0.8rem;
+  font-weight: 600;
   cursor: pointer;
   transition: var(--transition);
   text-align: center;
+  flex: 1;
+  max-width: 180px;
 }
 
-.conn-calor {
-  background: rgba(255, 111, 0, 0.15);
-  color: #ff6f00;
-  border: 1px solid rgba(255, 111, 0, 0.3);
-}
-
-.conn-calor:hover {
-  background: rgba(255, 111, 0, 0.3);
-}
-
-.conn-frio {
-  background: rgba(88, 166, 255, 0.15);
-  color: #58a6ff;
-  border: 1px solid rgba(88, 166, 255, 0.3);
-}
-
-.conn-frio:hover {
-  background: rgba(88, 166, 255, 0.3);
-}
-
-.conn-line {
-  width: 40px;
-  height: 2px;
-  background: rgba(48, 54, 61, 0.5);
-}
-
-.conn-arrow {
+.flecha-btn span {
   font-size: 0.65rem;
-  color: var(--color-texto-claro);
-  font-weight: 600;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.flecha-btn:hover {
+  transform: translateY(-2px);
+}
+
+.flecha-abajo-calor {
+  border-color: rgba(255, 111, 0, 0.3);
+  background: rgba(255, 111, 0, 0.08);
+}
+
+.flecha-abajo-calor span {
+  color: #ff6f00;
+}
+
+.flecha-abajo-calor:hover {
+  background: rgba(255, 111, 0, 0.18);
+  box-shadow: 0 4px 12px rgba(255, 111, 0, 0.2);
+}
+
+.flecha-abajo-frio {
+  border-color: rgba(88, 166, 255, 0.3);
+  background: rgba(88, 166, 255, 0.08);
+}
+
+.flecha-abajo-frio span {
+  color: #58a6ff;
+}
+
+.flecha-abajo-frio:hover {
+  background: rgba(88, 166, 255, 0.18);
+  box-shadow: 0 4px 12px rgba(88, 166, 255, 0.2);
+}
+
+.sublimacion-row {
+  display: flex;
+  gap: var(--espaciado-mediano);
+  width: 100%;
+  max-width: 400px;
+  justify-content: center;
+}
+
+.flecha-lado-calor {
+  border-color: rgba(255, 111, 0, 0.3);
+  background: rgba(255, 111, 0, 0.08);
+}
+
+.flecha-lado-calor span {
+  color: #ff6f00;
+}
+
+.flecha-lado-calor:hover {
+  background: rgba(255, 111, 0, 0.18);
+  box-shadow: 0 4px 12px rgba(255, 111, 0, 0.2);
+}
+
+.flecha-lado-frio {
+  border-color: rgba(88, 166, 255, 0.3);
+  background: rgba(88, 166, 255, 0.08);
+}
+
+.flecha-lado-frio span {
+  color: #58a6ff;
+}
+
+.flecha-lado-frio:hover {
+  background: rgba(88, 166, 255, 0.18);
+  box-shadow: 0 4px 12px rgba(88, 166, 255, 0.2);
 }
 
 .detalle-section {
@@ -631,13 +640,6 @@ export default {
 }
 
 @media (max-width: 768px) {
-  .estados-circulos {
-    flex-direction: column;
-  }
-  .conn-line {
-    width: 2px;
-    height: 30px;
-  }
   .detalle-body {
     grid-template-columns: 1fr;
   }
@@ -648,6 +650,18 @@ export default {
   .navegacion {
     flex-direction: column;
     gap: var(--espaciado-mediano);
+  }
+  .estado-flechas {
+    flex-direction: column;
+    align-items: center;
+  }
+  .sublimacion-row {
+    flex-direction: column;
+    align-items: center;
+  }
+  .flecha-btn {
+    max-width: 100%;
+    width: 100%;
   }
 }
 </style>
