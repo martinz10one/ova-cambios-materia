@@ -85,6 +85,12 @@
         </div>
       </section>
 
+      <section class="tarjeta reveal-section">
+        <h2 class="titulo-seccion">Simulador interactivo</h2>
+        <p class="intro-descripcion">Ajusta la temperatura con los botones y observa como cambia el comportamiento de las particulas.</p>
+        <ParticleSimulator />
+      </section>
+
       <section class="tarjeta detalle-section" v-if="detalleActivo">
         <div class="detalle-header">
           <h2 class="titulo-seccion">{{ detalle.nombre }}</h2>
@@ -203,10 +209,11 @@ import { onMounted, onBeforeUnmount, ref, reactive } from 'vue'
 import gsap from 'gsap'
 import ParticleBackground from '../components/ParticleBackground.vue'
 import ProgressBar from '../components/ProgressBar.vue'
+import ParticleSimulator from '../components/ParticleSimulator.vue'
 
 export default {
   name: 'Paso2View',
-  components: { ParticleBackground, ProgressBar },
+  components: { ParticleBackground, ProgressBar, ParticleSimulator },
   setup() {
     const hoverEstado = ref(null)
     const detalleActivo = ref(false)
