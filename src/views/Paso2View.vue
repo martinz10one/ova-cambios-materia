@@ -8,53 +8,79 @@
         <h2 class="titulo-seccion">Las 6 Transformaciones de la Materia</h2>
         <p class="intro-descripcion">La materia cambia de estado cuando se le aplica o retira energia calorifica. Explora cada transformacion en el diagrama interactivo.</p>
 
-        <div class="diagrama-redisenado">
-          <div class="estados-trio">
-            <div class="estado-badge badge-solido">
-              <svg viewBox="0 0 40 40" width="40" height="40">
-                <rect x="8" y="8" width="8" height="8" rx="1" fill="#4fc3f7" opacity="0.9"><animate attributeName="x" values="8;10;8" dur="2s" repeatCount="indefinite"/></rect>
-                <rect x="18" y="8" width="8" height="8" rx="1" fill="#4fc3f7" opacity="0.9"><animate attributeName="y" values="8;6;8" dur="2.5s" repeatCount="indefinite"/></rect>
-                <rect x="28" y="8" width="6" height="6" rx="1" fill="#4fc3f7" opacity="0.9"><animate attributeName="x" values="28;30;28" dur="1.8s" repeatCount="indefinite"/></rect>
-                <rect x="13" y="18" width="8" height="8" rx="1" fill="#4fc3f7" opacity="0.9"><animate attributeName="y" values="18;16;18" dur="2.2s" repeatCount="indefinite"/></rect>
-                <rect x="23" y="18" width="8" height="8" rx="1" fill="#4fc3f7" opacity="0.9"><animate attributeName="x" values="23;25;23" dur="1.5s" repeatCount="indefinite"/></rect>
-                <rect x="8" y="28" width="8" height="8" rx="1" fill="#4fc3f7" opacity="0.9"><animate attributeName="y" values="28;26;28" dur="2.8s" repeatCount="indefinite"/></rect>
-                <rect x="18" y="28" width="8" height="8" rx="1" fill="#4fc3f7" opacity="0.9"><animate attributeName="x" values="18;20;18" dur="1.3s" repeatCount="indefinite"/></rect>
+        <div class="diagrama-transiciones">
+          <div class="fila-transicion">
+            <div class="estado-icono">
+              <svg viewBox="0 0 40 40" width="36" height="36">
+                <rect x="10" y="8" width="7" height="7" rx="1" fill="#4fc3f7" opacity="0.9"><animate attributeName="x" values="10;12;10" dur="2s" repeatCount="indefinite"/></rect>
+                <rect x="19" y="8" width="7" height="7" rx="1" fill="#4fc3f7" opacity="0.9"><animate attributeName="y" values="8;6;8" dur="2.5s" repeatCount="indefinite"/></rect>
+                <rect x="14" y="17" width="7" height="7" rx="1" fill="#4fc3f7" opacity="0.9"><animate attributeName="x" values="14;16;14" dur="1.8s" repeatCount="indefinite"/></rect>
+                <rect x="10" y="26" width="7" height="7" rx="1" fill="#4fc3f7" opacity="0.9"><animate attributeName="y" values="26;24;26" dur="2.2s" repeatCount="indefinite"/></rect>
+                <rect x="19" y="26" width="7" height="7" rx="1" fill="#4fc3f7" opacity="0.9"><animate attributeName="x" values="19;21;19" dur="1.5s" repeatCount="indefinite"/></rect>
               </svg>
-              <span>Solido</span>
+              <span class="estado-nombre">Solido</span>
             </div>
-            <div class="estado-flechas">
-              <button class="flecha-btn flecha-abajo-calor" @click="showDetalle(0)">Fusion <span>+Calor</span></button>
-              <button class="flecha-btn flecha-abajo-frio" @click="showDetalle(1)">Solidificacion <span>-Calor</span></button>
-            </div>
-            <div class="estado-badge badge-liquido">
-              <svg viewBox="0 0 40 40" width="40" height="40">
-                <circle cx="12" cy="16" r="4" fill="#4fc3f7" opacity="0.8"><animate attributeName="cy" values="16;20;14;18;16" dur="2s" repeatCount="indefinite"/></circle>
-                <circle cx="22" cy="14" r="4" fill="#4fc3f7" opacity="0.8"><animate attributeName="cy" values="14;18;12;16;14" dur="2.5s" repeatCount="indefinite"/></circle>
-                <circle cx="32" cy="18" r="3" fill="#4fc3f7" opacity="0.7"><animate attributeName="cy" values="18;22;16;20;18" dur="3s" repeatCount="indefinite"/></circle>
-                <circle cx="17" cy="24" r="3" fill="#4fc3f7" opacity="0.7"><animate attributeName="cy" values="24;28;22;26;24" dur="2.8s" repeatCount="indefinite"/></circle>
-                <circle cx="27" cy="22" r="4" fill="#4fc3f7" opacity="0.8"><animate attributeName="cy" values="22;26;20;24;22" dur="3.2s" repeatCount="indefinite"/></circle>
-                <ellipse cx="20" cy="32" rx="18" ry="4" fill="#4fc3f7" opacity="0.12"></ellipse>
-              </svg>
-              <span>Liquido</span>
-            </div>
-            <div class="estado-flechas">
-              <button class="flecha-btn flecha-abajo-calor" @click="showDetalle(2)">Vaporizacion <span>+Calor</span></button>
-              <button class="flecha-btn flecha-abajo-frio" @click="showDetalle(3)">Condensacion <span>-Calor</span></button>
-            </div>
-            <div class="estado-badge badge-gas">
-              <svg viewBox="0 0 40 40" width="40" height="40">
-                <circle cx="12" cy="12" r="3" fill="#4fc3f7" opacity="0.5"><animate attributeName="cy" values="12;5;18;3;12" dur="3.5s" repeatCount="indefinite"/><animate attributeName="cx" values="12;18;8;15;12" dur="3.5s" repeatCount="indefinite"/></circle>
-                <circle cx="28" cy="10" r="3" fill="#4fc3f7" opacity="0.4"><animate attributeName="cy" values="10;3;16;1;10" dur="3s" repeatCount="indefinite"/></circle>
-                <circle cx="18" cy="18" r="3" fill="#4fc3f7" opacity="0.5"><animate attributeName="cy" values="18;11;24;9;18" dur="4s" repeatCount="indefinite"/></circle>
-                <circle cx="32" cy="24" r="3" fill="#4fc3f7" opacity="0.4"><animate attributeName="cy" values="24;17;30;15;24" dur="3.8s" repeatCount="indefinite"/></circle>
-                <circle cx="8" cy="26" r="3" fill="#4fc3f7" opacity="0.4"><animate attributeName="cy" values="26;19;32;17;26" dur="4.2s" repeatCount="indefinite"/></circle>
-              </svg>
-              <span>Gaseoso</span>
+            <div class="transicion-grupo">
+              <button class="trans-boton trans-calor" @click="showDetalle(0)">
+                <span class="trans-titulo">Fusion</span>
+                <span class="trans-direccion">→ Liquido</span>
+                <span class="trans-energia">+ Calor</span>
+              </button>
+              <button class="trans-boton trans-calor" @click="showDetalle(4)">
+                <span class="trans-titulo">Sublimacion</span>
+                <span class="trans-direccion">→ Gaseoso</span>
+                <span class="trans-energia">+ Calor</span>
+              </button>
             </div>
           </div>
-          <div class="sublimacion-row">
-            <button class="flecha-btn flecha-lado-calor" @click="showDetalle(4)">Sublimacion <span>+Calor</span></button>
-            <button class="flecha-btn flecha-lado-frio" @click="showDetalle(5)">Sublimacion Inversa <span>-Calor</span></button>
+
+          <div class="fila-transicion">
+            <div class="estado-icono">
+              <svg viewBox="0 0 40 40" width="36" height="36">
+                <circle cx="13" cy="16" r="4" fill="#4fc3f7" opacity="0.8"><animate attributeName="cy" values="16;20;14;18;16" dur="2s" repeatCount="indefinite"/></circle>
+                <circle cx="24" cy="14" r="4" fill="#4fc3f7" opacity="0.8"><animate attributeName="cy" values="14;18;12;16;14" dur="2.5s" repeatCount="indefinite"/></circle>
+                <circle cx="18" cy="24" r="3" fill="#4fc3f7" opacity="0.7"><animate attributeName="cy" values="24;28;22;26;24" dur="3s" repeatCount="indefinite"/></circle>
+                <circle cx="28" cy="22" r="3" fill="#4fc3f7" opacity="0.7"><animate attributeName="cy" values="22;26;20;24;22" dur="2.8s" repeatCount="indefinite"/></circle>
+                <ellipse cx="20" cy="32" rx="16" ry="4" fill="#4fc3f7" opacity="0.1"/>
+              </svg>
+              <span class="estado-nombre">Liquido</span>
+            </div>
+            <div class="transicion-grupo">
+              <button class="trans-boton trans-frio" @click="showDetalle(1)">
+                <span class="trans-titulo">Solidificacion</span>
+                <span class="trans-direccion">→ Solido</span>
+                <span class="trans-energia">- Calor</span>
+              </button>
+              <button class="trans-boton trans-calor" @click="showDetalle(2)">
+                <span class="trans-titulo">Vaporizacion</span>
+                <span class="trans-direccion">→ Gaseoso</span>
+                <span class="trans-energia">+ Calor</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="fila-transicion">
+            <div class="estado-icono">
+              <svg viewBox="0 0 40 40" width="36" height="36">
+                <circle cx="28" cy="10" r="3" fill="#4fc3f7" opacity="0.5"><animate attributeName="cx" values="28;33;23;30;28" dur="3.5s" repeatCount="indefinite"/><animate attributeName="cy" values="10;5;15;3;10" dur="3.5s" repeatCount="indefinite"/></circle>
+                <circle cx="14" cy="14" r="3" fill="#4fc3f7" opacity="0.4"><animate attributeName="cy" values="14;8;20;5;14" dur="3s" repeatCount="indefinite"/></circle>
+                <circle cx="22" cy="20" r="3" fill="#4fc3f7" opacity="0.5"><animate attributeName="cy" values="20;14;26;12;20" dur="4s" repeatCount="indefinite"/></circle>
+                <circle cx="32" cy="26" r="3" fill="#4fc3f7" opacity="0.4"><animate attributeName="cy" values="26;20;30;18;26" dur="3.8s" repeatCount="indefinite"/></circle>
+              </svg>
+              <span class="estado-nombre">Gaseoso</span>
+            </div>
+            <div class="transicion-grupo">
+              <button class="trans-boton trans-frio" @click="showDetalle(3)">
+                <span class="trans-titulo">Condensacion</span>
+                <span class="trans-direccion">→ Liquido</span>
+                <span class="trans-energia">- Calor</span>
+              </button>
+              <button class="trans-boton trans-frio" @click="showDetalle(5)">
+                <span class="trans-titulo">Subl. Inversa</span>
+                <span class="trans-direccion">→ Solido</span>
+                <span class="trans-energia">- Calor</span>
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -302,141 +328,110 @@ export default {
   min-height: 100vh;
 }
 
-.diagrama-redisenado {
+.diagrama-transiciones {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: var(--espaciado-mediano);
   padding: var(--espaciado-mediano) 0;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
-.estados-trio {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--espaciado-mediano);
-  width: 100%;
-  max-width: 400px;
-}
-
-.estado-badge {
+.fila-transicion {
   display: flex;
   align-items: center;
   gap: var(--espaciado-mediano);
-  padding: var(--espaciado-mediano) var(--espaciado-grande);
+  padding: var(--espaciado-mediano);
   border-radius: var(--radio-borde);
-  border: 2px solid rgba(79, 195, 247, 0.4);
-  background: rgba(79, 195, 247, 0.05);
-  width: 100%;
-  justify-content: center;
-  transition: var(--transition);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(48, 54, 61, 0.3);
 }
 
-.estado-badge span {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--color-blanco);
-}
-
-.estado-flechas {
-  display: flex;
-  gap: var(--espaciado-mediano);
-  width: 100%;
-  justify-content: center;
-}
-
-.flecha-btn {
+.estado-icono {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  padding: 8px 16px;
-  border: 1px solid rgba(48, 54, 61, 0.5);
+  min-width: 70px;
+  flex-shrink: 0;
+}
+
+.estado-nombre {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-texto-claro);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.transicion-grupo {
+  display: flex;
+  gap: var(--espaciado-pequeño);
+  flex: 1;
+}
+
+.trans-boton {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 10px;
   border-radius: 8px;
+  border: 1px solid rgba(48, 54, 61, 0.4);
   background: rgba(255, 255, 255, 0.03);
-  color: var(--color-blanco);
-  font-size: 0.8rem;
-  font-weight: 600;
   cursor: pointer;
   transition: var(--transition);
   text-align: center;
-  flex: 1;
-  max-width: 180px;
 }
 
-.flecha-btn span {
+.trans-boton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+}
+
+.trans-calor {
+  border-color: rgba(255, 111, 0, 0.25);
+  background: rgba(255, 111, 0, 0.06);
+}
+
+.trans-calor:hover {
+  background: rgba(255, 111, 0, 0.15);
+  border-color: rgba(255, 111, 0, 0.5);
+  box-shadow: 0 6px 16px rgba(255, 111, 0, 0.15);
+}
+
+.trans-frio {
+  border-color: rgba(88, 166, 255, 0.25);
+  background: rgba(88, 166, 255, 0.06);
+}
+
+.trans-frio:hover {
+  background: rgba(88, 166, 255, 0.15);
+  border-color: rgba(88, 166, 255, 0.5);
+  box-shadow: 0 6px 16px rgba(88, 166, 255, 0.15);
+}
+
+.trans-titulo {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-blanco);
+}
+
+.trans-direccion {
+  font-size: 0.7rem;
+  color: var(--color-texto-claro);
+}
+
+.trans-energia {
   font-size: 0.65rem;
   font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.flecha-btn:hover {
-  transform: translateY(-2px);
-}
-
-.flecha-abajo-calor {
-  border-color: rgba(255, 111, 0, 0.3);
-  background: rgba(255, 111, 0, 0.08);
-}
-
-.flecha-abajo-calor span {
-  color: #ff6f00;
-}
-
-.flecha-abajo-calor:hover {
-  background: rgba(255, 111, 0, 0.18);
-  box-shadow: 0 4px 12px rgba(255, 111, 0, 0.2);
-}
-
-.flecha-abajo-frio {
-  border-color: rgba(88, 166, 255, 0.3);
-  background: rgba(88, 166, 255, 0.08);
-}
-
-.flecha-abajo-frio span {
-  color: #58a6ff;
-}
-
-.flecha-abajo-frio:hover {
-  background: rgba(88, 166, 255, 0.18);
-  box-shadow: 0 4px 12px rgba(88, 166, 255, 0.2);
-}
-
-.sublimacion-row {
-  display: flex;
-  gap: var(--espaciado-mediano);
-  width: 100%;
-  max-width: 400px;
-  justify-content: center;
-}
-
-.flecha-lado-calor {
-  border-color: rgba(255, 111, 0, 0.3);
-  background: rgba(255, 111, 0, 0.08);
-}
-
-.flecha-lado-calor span {
-  color: #ff6f00;
-}
-
-.flecha-lado-calor:hover {
-  background: rgba(255, 111, 0, 0.18);
-  box-shadow: 0 4px 12px rgba(255, 111, 0, 0.2);
-}
-
-.flecha-lado-frio {
-  border-color: rgba(88, 166, 255, 0.3);
-  background: rgba(88, 166, 255, 0.08);
-}
-
-.flecha-lado-frio span {
-  color: #58a6ff;
-}
-
-.flecha-lado-frio:hover {
-  background: rgba(88, 166, 255, 0.18);
-  box-shadow: 0 4px 12px rgba(88, 166, 255, 0.2);
-}
+.trans-calor .trans-energia { color: #ff6f00; }
+.trans-frio .trans-energia { color: #58a6ff; }
 
 .detalle-section {
   margin-top: var(--espaciado-grande);
@@ -651,16 +646,11 @@ export default {
     flex-direction: column;
     gap: var(--espaciado-mediano);
   }
-  .estado-flechas {
+  .fila-transicion {
     flex-direction: column;
-    align-items: center;
+    text-align: center;
   }
-  .sublimacion-row {
-    flex-direction: column;
-    align-items: center;
-  }
-  .flecha-btn {
-    max-width: 100%;
+  .transicion-grupo {
     width: 100%;
   }
 }
