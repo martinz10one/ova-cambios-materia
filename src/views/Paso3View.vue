@@ -6,7 +6,7 @@
     <div class="contenido-interior">
       <section class="tarjeta">
         <h2 class="titulo-seccion">Actividad: Arrastra y Empareja</h2>
-        <p class="intro-descripcion">Arrastra cada nombre de cambio de estado hacia su definicion correcta.</p>
+        <p class="intro-descripcion">Arrastra cada nombre de cambio de estado hacia su definición correcta.</p>
 
         <div class="juego-header">
           <div class="juego-info">
@@ -120,12 +120,12 @@ export default {
     ])
 
     const definiciones = ref([
-      { id: 0, texto: 'Cambio de solido a liquido por absorcion de calor.', emparejadoCon: null, resultado: null, correcta: 0 },
-      { id: 1, texto: 'Cambio de liquido a solido por perdida de calor.', emparejadoCon: null, resultado: null, correcta: 1 },
-      { id: 2, texto: 'Cambio de liquido a gaseoso mediante calor intenso.', emparejadoCon: null, resultado: null, correcta: 2 },
-      { id: 3, texto: 'Cambio de gaseoso a liquido por enfriamiento.', emparejadoCon: null, resultado: null, correcta: 3 },
-      { id: 4, texto: 'Cambio directo de solido a gaseoso sin pasar por liquido.', emparejadoCon: null, resultado: null, correcta: 4 },
-      { id: 5, texto: 'Cambio directo de gaseoso a solido sin pasar por liquido.', emparejadoCon: null, resultado: null, correcta: 5 }
+      { id: 0, texto: 'Cambio de sólido a líquido por absorción de calor.', emparejadoCon: null, resultado: null, correcta: 0 },
+      { id: 1, texto: 'Cambio de líquido a sólido por pérdida de calor.', emparejadoCon: null, resultado: null, correcta: 1 },
+      { id: 2, texto: 'Cambio de líquido a gaseoso mediante calor intenso.', emparejadoCon: null, resultado: null, correcta: 2 },
+      { id: 3, texto: 'Cambio de gaseoso a líquido por enfriamiento.', emparejadoCon: null, resultado: null, correcta: 3 },
+      { id: 4, texto: 'Cambio directo de sólido a gaseoso sin pasar por líquido.', emparejadoCon: null, resultado: null, correcta: 4 },
+      { id: 5, texto: 'Cambio directo de gaseoso a sólido sin pasar por líquido.', emparejadoCon: null, resultado: null, correcta: 5 }
     ])
 
     const completado = computed(() => aciertos.value === 6)

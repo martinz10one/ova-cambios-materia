@@ -39,44 +39,44 @@
       </section>
 
       <section class="tarjeta reveal-section" ref="sectionIntro">
-        <h2 class="titulo-seccion">Que son los cambios de estado?</h2>
+        <h2 class="titulo-seccion">¿Qué son los cambios de estado?</h2>
         <p class="intro-descripcion">
-          La materia cambia de estado cuando pasa de solido a liquido, de liquido a gaseoso, o viceversa. 
-          Estos cambios son <strong>fisicos</strong>: la sustancia sigue siendo la misma, solo cambia su 
+          La materia cambia de estado cuando pasa de sólido a líquido, de líquido a gaseoso, o viceversa. 
+          Estos cambios son <strong>físicos</strong>: la sustancia sigue siendo la misma, solo cambia su 
           apariencia y comportamiento.
         </p>
         <p class="intro-descripcion">
           Comprender estos procesos es fundamental para entender desde el ciclo del agua en la naturaleza 
           hasta el funcionamiento de motores, neveras y muchos procesos industriales.
         </p>
-        <h3 class="subtitulo-seccion">Que factores provocan estos cambios?</h3>
+        <h3 class="subtitulo-seccion">¿Qué factores provocan estos cambios?</h3>
         <div class="factores-grid">
           <div class="factor-card">
             <div class="factor-icono">
               <svg viewBox="0 0 48 48" width="48" height="48"><circle cx="24" cy="24" r="18" fill="none" stroke="#ff6f00" stroke-width="2.5"/><circle cx="24" cy="24" r="10" fill="none" stroke="#ff6f00" stroke-width="2"/><circle cx="24" cy="24" r="4" fill="#ff6f00"/></svg>
             </div>
-            <h4>Energia</h4>
-            <p>Las particulas necesitan energia para moverse. Al ganar energia se separan; al perderla se ordenan.</p>
+            <h4>Energía</h4>
+            <p>Las partículas necesitan energía para moverse. Al ganar energía se separan; al perderla se ordenan.</p>
           </div>
           <div class="factor-card">
             <div class="factor-icono">
               <svg viewBox="0 0 48 48" width="48" height="48"><path d="M24 6v4M24 38v4M6 24h4M38 24h4M12.7 12.7l2.8 2.8M32.5 32.5l2.8 2.8M12.7 35.3l2.8-2.8M32.5 15.5l2.8-2.8" stroke="#4fc3f7" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="24" r="8" fill="none" stroke="#4fc3f7" stroke-width="2"/></svg>
             </div>
             <h4>Temperatura</h4>
-            <p>Al aumentar la temperatura las particulas vibran mas y pueden cambiar de estado. Al bajar, se aquietan.</p>
+            <p>Al aumentar la temperatura las partículas vibran más y pueden cambiar de estado. Al bajar, se aquietan.</p>
           </div>
           <div class="factor-card">
             <div class="factor-icono">
-              <svg viewBox="0 0 48 48" width="48" height="48"><rect x="8" y="18" width="32" height="20" rx="4" fill="none" stroke="#81c784" stroke-width="2.5"/><rect x="18" y="8" width="12" height="10" rx="2" fill="none" stroke="#81c784" stroke-width="2"/><path d="M22 14v-2h4v2" fill="none" stroke="#81c784" stroke-width="2" stroke-linecap="round"/><line x1="8" y1="26" x2="40" y2="26" stroke="#81c784" stroke-width="1.5" opacity="0.5"/><text x="24" y="45" text-anchor="middle" fill="#81c784" font-size="6">PRESION</text></svg>
+              <svg viewBox="0 0 48 48" width="48" height="48"><rect x="8" y="18" width="32" height="20" rx="4" fill="none" stroke="#81c784" stroke-width="2.5"/><rect x="18" y="8" width="12" height="10" rx="2" fill="none" stroke="#81c784" stroke-width="2"/><path d="M22 14v-2h4v2" fill="none" stroke="#81c784" stroke-width="2" stroke-linecap="round"/><line x1="8" y1="26" x2="40" y2="26" stroke="#81c784" stroke-width="1.5" opacity="0.5"/></svg>
             </div>
-            <h4>Presion</h4>
-            <p>Al aumentar la presion las particulas se comprimen. Al reducirla, se expanden y pueden liberarse.</p>
+            <h4>Presión</h4>
+            <p>Al aumentar la presión las partículas se comprimen. Al reducirla, se expanden y pueden liberarse.</p>
           </div>
         </div>
       </section>
 
       <section class="tarjeta reveal-section" ref="sectionObjetivos">
-        <h2 class="titulo-seccion">Que vas a aprender</h2>
+        <h2 class="titulo-seccion">Qué vas a aprender</h2>
         <div class="grid grid-2 learn-grid">
           <div
             class="learn-card"
@@ -95,7 +95,7 @@
       </section>
 
       <section class="tarjeta reveal-section" ref="sectionEncuesta">
-        <h2 class="titulo-seccion">Que sabes ya</h2>
+        <h2 class="titulo-seccion">Qué sabes ya</h2>
         <p class="intro-descripcion">Pon a prueba tus conocimientos antes de empezar.</p>
         <div class="encuesta">
           <p class="pregunta">{{ encuesta.pregunta }}</p>
@@ -117,7 +117,7 @@
             </button>
           </div>
           <div v-if="encuesta.respondido" class="mensaje" :class="encuesta.correcta === encuesta.seleccionada ? 'mensaje-exito' : 'mensaje-error'">
-            <strong>{{ encuesta.correcta === encuesta.seleccionada ? 'Correcto!' : 'Intenta de nuevo' }}</strong>
+            <strong>{{ encuesta.correcta === encuesta.seleccionada ? '¡Correcto!' : 'Intenta de nuevo' }}</strong>
             <br>{{ encuesta.explicacion }}
           </div>
         </div>
@@ -173,10 +173,10 @@ export default {
     ])
 
     const objetivos = [
-      { icono: '01', titulo: 'Identificar', descripcion: 'Los seis cambios de estado de la materia y sus caracteristicas' },
-      { icono: '02', titulo: 'Comprender', descripcion: 'Que factores provocan cada transformacion: energia, temperatura y presion' },
+      { icono: '01', titulo: 'Identificar', descripcion: 'Los seis cambios de estado de la materia y sus características' },
+      { icono: '02', titulo: 'Comprender', descripcion: 'Qué factores provocan cada transformación: energía, temperatura y presión' },
       { icono: '03', titulo: 'Aplicar', descripcion: 'Reconocer cambios de estado en ejemplos cotidianos de tu entorno' },
-      { icono: '04', titulo: 'Analizar', descripcion: 'Diferenciar entre cambios fisicos (de estado) y cambios quimicos' }
+      { icono: '04', titulo: 'Analizar', descripcion: 'Diferenciar entre cambios físicos (de estado) y cambios químicos' }
     ]
 
     function responderEncuesta(idx) {
