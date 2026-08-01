@@ -25,6 +25,8 @@ Barra de progreso visual que indica la sección actual del OVA.
 
 ## Tecnologías
 
+
+
 - Vue 3
 - Vue Router 4
 - Vite
