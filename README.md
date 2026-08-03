@@ -84,10 +84,13 @@ src/
 
 ## Capturas
 
-- [Paso 1 - Introducción](assets/screenshots/paso1.png)
-- [Paso 2 - Simulador de partículas](assets/screenshots/paso2.png)
-- [Paso 3 - Actividad drag & drop](assets/screenshots/paso3.png)
-- [Paso 4 - Evaluación](assets/screenshots/paso4.png)
+![Paso 1 - Introducción](src/assets/screenshots/paso1.png)
+
+![Paso 2 - Simulador de partículas](src/assets/screenshots/paso2.png)
+
+![Paso 3 - Actividad drag & drop](src/assets/screenshots/paso3.png)
+
+![Paso 4 - Evaluación](src/assets/screenshots/paso4.png)
 
 ## Enlaces
 
