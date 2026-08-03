@@ -1,6 +1,6 @@
 # OVA Física - Cambios de la Materia
 
-Objeto Virtual de Aprendizaje (OVA) interactivo sobre los cambios de estado de la materia, diseñado para el programa de Análisis y Desarrollo de Software.
+Objeto Virtual de Aprendizaje (OVA) interactivo sobre los cambios de estado de la materia
 
 ## Tema
 
