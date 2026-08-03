@@ -25,8 +25,8 @@
             :key="item.id"
             class="fila-emparejar"
             :class="{
-              'fila-correcta': verificadoEmparejamiento && item.resultado === 'correcto',
-              'fila-incorrecta': verificadoEmparejamiento && item.resultado === 'incorrecto'
+              'fila-correcta': item.resultado === 'correcto',
+              'fila-incorrecta': item.resultado === 'incorrecto'
             }"
           >
             <div class="columna-emparejar">
@@ -34,14 +34,19 @@
             </div>
             <div class="columna-flecha">→</div>
             <div class="columna-emparejar">
-              <select v-model="item.seleccion" :disabled="verificadoEmparejamiento">
+              <select v-model="item.seleccion" :disabled="item.resultado === 'correcto'" @change="alEditarEmparejamiento(item)">
                 <option :value="null" disabled>Selecciona una opción</option>
-                <option v-for="optIdx in opcionesMezcladas" :key="optIdx" :value="optIdx">
+                <option
+                  v-for="optIdx in opcionesMezcladas"
+                  :key="optIdx"
+                  :value="optIdx"
+                  :disabled="opcionesUsadas.has(optIdx) && item.seleccion !== optIdx"
+                >
                   {{ opcionesEmparejamiento[optIdx] }}
                 </option>
               </select>
             </div>
-            <span v-if="verificadoEmparejamiento" class="icono-emparejar">
+            <span v-if="item.resultado" class="icono-emparejar">
               <span v-if="item.resultado === 'correcto'" class="check">✓</span>
               <span v-else class="cross">✗</span>
             </span>
@@ -165,6 +170,8 @@ export default {
     const verificadoEmparejamiento = ref(false)
     const aciertosEmparejamiento = ref(0)
 
+    const opcionesUsadas = computed(() => new Set(emparejamiento.value.filter(i => i.seleccion !== null).map(i => i.seleccion)))
+
     const mensajeResultado = computed(() => {
       const a = aciertosEmparejamiento.value
       if (a >= 8) return 'Excelente'
@@ -207,6 +214,13 @@ export default {
       aciertosEmparejamiento.value = aciertos
       verificadoEmparejamiento.value = true
       gsap.fromTo('.fila-emparejar.fila-correcta', { scale: 0.98 }, { scale: 1, duration: 0.4, stagger: 0.05, ease: 'back.out(2)' })
+    }
+
+    function alEditarEmparejamiento(item) {
+      if (!verificadoEmparejamiento.value) return
+      item.resultado = null
+      verificadoEmparejamiento.value = false
+      aciertosEmparejamiento.value = 0
     }
 
     function reiniciarEmparejamiento() {
@@ -253,6 +267,7 @@ export default {
       opcionesEmparejamiento,
       opcionesMezcladas,
       emparejamiento,
+      opcionesUsadas,
       verificadoEmparejamiento,
       aciertosEmparejamiento,
       mensajeResultado,
@@ -262,6 +277,7 @@ export default {
       puntajeGeneral,
       verificarEmparejamiento,
       reiniciarEmparejamiento,
+      alEditarEmparejamiento,
       responderVf,
       reiniciarVf
     }
