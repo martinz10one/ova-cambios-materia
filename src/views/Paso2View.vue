@@ -86,9 +86,14 @@
       </section>
 
       <section class="tarjeta reveal-section">
-        <h2 class="titulo-seccion">Simulador interactivo</h2>
-        <p class="intro-descripcion">Ajusta la temperatura con los botones y observa como cambia el comportamiento de las particulas.</p>
-        <ParticleSimulator />
+        <h2 class="titulo-seccion">Video resumen</h2>
+        <p class="intro-descripcion">Observa el video para repasar los seis cambios de estado con ejemplos de la vida diaria.</p>
+        <div class="video-contenedor">
+          <video controls preload="metadata">
+            <source :src="videoUrl" type="video/mp4" />
+            Tu navegador no soporta la reproduccion de video.
+          </video>
+        </div>
       </section>
 
       <section class="tarjeta detalle-section" v-if="detalleActivo">
@@ -126,52 +131,55 @@
       </section>
 
       <section class="tarjeta reveal-section">
-        <h2 class="titulo-seccion">Factores que influyen</h2>
-        <div class="factores-grid">
-          <div class="factor-card">
-            <div class="factor-icono">
-              <svg viewBox="0 0 40 40" width="40" height="40">
-                <circle cx="20" cy="20" r="16" fill="none" stroke="#ff6f00" stroke-width="2"/>
-                <circle cx="12" cy="12" r="4" fill="#ff6f00" opacity="0.8"/>
-                <circle cx="28" cy="10" r="3" fill="#ff6f00" opacity="0.6"/>
-                <circle cx="22" cy="28" r="3" fill="#ff6f00" opacity="0.7"/>
-                <circle cx="10" cy="25" r="3" fill="#ff6f00" opacity="0.5"/>
-                <animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="6s" repeatCount="indefinite"/>
-              </svg>
-            </div>
-            <h4>Temperatura</h4>
-            <p>Al aumentar la temperatura, las particulas ganan energia y se mueven mas. Al disminuir, pierden energia y se compactan.</p>
+        <h2 class="titulo-seccion">Simulador interactivo</h2>
+        <p class="intro-descripcion">Ajusta la temperatura con los botones y observa como cambia el comportamiento de las particulas.</p>
+        <ParticleSimulator />
+      </section>
+
+      <section class="tarjeta reveal-section">
+        <h2 class="titulo-seccion">Juego: ¿Qué factor interviene?</h2>
+        <p class="intro-descripcion">Cada situación describe un cambio de estado de la vida diaria. Elige cuál de los tres factores (temperatura, presión o energía) es el que lo provoca.</p>
+
+        <div v-if="!factoresTerminado" class="factores-juego">
+          <div class="factores-progreso">Situación {{ factorActual + 1 }} de {{ factoresJuego.length }}</div>
+          <div class="factores-pregunta">{{ factoresJuego[factorActual].situacion }}</div>
+          <div class="factores-opciones">
+            <button
+              v-for="f in factorOpciones"
+              :key="f"
+              class="factor-opcion"
+              :class="{
+                'opcion-correcta': factorRespondido && f === factoresJuego[factorActual].factor,
+                'opcion-incorrecta': factorRespondido && factorSeleccion === f && f !== factoresJuego[factorActual].factor,
+                'opcion-desactivada': factorRespondido && f !== factorSeleccion
+              }"
+              :disabled="factorRespondido"
+              @click="responderFactor(f)"
+            >
+              {{ f }}
+            </button>
           </div>
-          <div class="factor-card">
-            <div class="factor-icono">
-              <svg viewBox="0 0 40 40" width="40" height="40">
-                <polygon points="20,4 36,30 4,30" fill="none" stroke="#58a6ff" stroke-width="2"/>
-                <line x1="20" y1="4" x2="20" y2="30" stroke="#58a6ff" stroke-width="1.5"/>
-                <circle cx="12" cy="20" r="3" fill="#58a6ff" opacity="0.6"><animate attributeName="cy" values="20;18;22;20" dur="3s" repeatCount="indefinite"/></circle>
-                <circle cx="20" cy="15" r="3" fill="#58a6ff" opacity="0.8"><animate attributeName="cy" values="15;13;17;15" dur="2.5s" repeatCount="indefinite"/></circle>
-                <circle cx="28" cy="20" r="3" fill="#58a6ff" opacity="0.6"><animate attributeName="cy" values="20;18;22;20" dur="3.5s" repeatCount="indefinite"/></circle>
-              </svg>
-            </div>
-            <h4>Presion</h4>
-            <p>Al aumentar la presion, las particulas se comprimen. Al disminuir, se expanden facilitando cambios de estado.</p>
+          <div v-if="factorRespondido" class="mensaje" :class="factorCorrecto ? 'mensaje-exito' : 'mensaje-error'">
+            <strong>{{ factorCorrecto ? '¡Correcto!' : 'Incorrecto' }}</strong>
+            <p class="mensaje-texto">{{ factoresJuego[factorActual].explicacion }}</p>
           </div>
-          <div class="factor-card">
-            <div class="factor-icono">
-              <svg viewBox="0 0 40 40" width="40" height="40">
-                <line x1="4" y1="20" x2="36" y2="20" stroke="#3fb950" stroke-width="2"/>
-                <rect x="8" y="10" width="10" height="20" rx="2" fill="#3fb950" opacity="0.5">
-                  <animate attributeName="height" values="20;24;16;20" dur="2s" repeatCount="indefinite"/>
-                  <animate attributeName="y" values="10;8;12;10" dur="2s" repeatCount="indefinite"/>
-                </rect>
-                <rect x="22" y="6" width="10" height="28" rx="2" fill="#3fb950" opacity="0.7">
-                  <animate attributeName="height" values="28;32;24;28" dur="2.5s" repeatCount="indefinite"/>
-                  <animate attributeName="y" values="6;4;8;6" dur="2.5s" repeatCount="indefinite"/>
-                </rect>
-              </svg>
-            </div>
-            <h4>Energia</h4>
-            <p>La energia calorifica es la fuerza impulsora. Mas energia separa particulas, menos energia las une en estructuras ordenadas.</p>
+          <div v-if="factorRespondido" class="factores-avance">
+            <button v-if="factorActual < factoresJuego.length - 1" class="boton boton-principal" @click="siguienteFactor">Siguiente situación →</button>
+            <button v-else class="boton boton-principal" @click="finalizarFactores">Ver resultado</button>
           </div>
+        </div>
+
+        <div v-else class="factores-resultado">
+          <h3 class="resultado-titulo">Resultado del juego</h3>
+          <p class="resultado-numero">Acertaste <strong>{{ factoresAciertos }}</strong> de {{ factoresJuego.length }} situaciones</p>
+          <p class="resultado-mensaje">
+            {{ factoresAciertos === factoresJuego.length
+              ? '¡Perfecto! Domina los tres factores que provocan los cambios de estado.'
+              : factoresAciertos >= 4
+                ? 'Buen trabajo. Repasa las explicaciones de las situaciones que fallaste.'
+                : 'Repasa el Paso 1 y vuelve a intentarlo.' }}
+          </p>
+          <button class="boton boton-secundario" @click="reiniciarFactores">Jugar de nuevo</button>
         </div>
       </section>
 
@@ -184,11 +192,12 @@
 </template>
 
 <script>
-import { onMounted, onBeforeUnmount, ref, reactive } from 'vue'
+import { onMounted, onBeforeUnmount, ref, reactive, computed } from 'vue'
 import gsap from 'gsap'
 import ParticleBackground from '../components/ParticleBackground.vue'
 import ProgressBar from '../components/ProgressBar.vue'
 import ParticleSimulator from '../components/ParticleSimulator.vue'
+import videoUrl from '../assets/videos/Cambios_de_la_materia.mp4'
 
 export default {
   name: 'Paso2View',
@@ -213,13 +222,55 @@ export default {
       detalleActivo.value = true
     }
 
+    const factorOpciones = ['Temperatura', 'Presión', 'Energía']
+    const factoresJuego = [
+      { situacion: 'Un cubo de hielo se derrite al sacarlo de la nevera.', factor: 'Temperatura', explicacion: 'A temperatura ambiente el hielo gana calor y sus partículas se mueven hasta fundirse.' },
+      { situacion: 'El agua hierve a menos de 100°C en la cima de una montaña.', factor: 'Presión', explicacion: 'A menor presión atmosférica, las partículas escapan con menos energía y el agua hierve antes.' },
+      { situacion: 'La ropa mojada se seca tendida al sol.', factor: 'Energía', explicacion: 'La energía calorífica del sol hace que las partículas del agua pasen al aire como vapor.' },
+      { situacion: 'La escarcha se forma en las ventanas en invierno.', factor: 'Temperatura', explicacion: 'La baja temperatura hace que el vapor del ambiente se congele directo en cristales.' },
+      { situacion: 'Una olla a presión cocina los alimentos más rápido.', factor: 'Presión', explicacion: 'Al aumentar la presión, el agua hierve a mayor temperatura y la cocción es más rápida.' },
+      { situacion: 'El vapor de la ducha empaña el espejo del baño.', factor: 'Temperatura', explicacion: 'El vapor toca la superficie fría del espejo, pierde energía y se condensa en gotitas.' }
+    ]
+    const factorActual = ref(0)
+    const factorRespondido = ref(false)
+    const factorSeleccion = ref('')
+    const factoresAciertos = ref(0)
+    const factoresTerminado = ref(false)
+
+    const factorCorrecto = computed(() => factorSeleccion.value === factoresJuego[factorActual.value].factor)
+
+    function responderFactor(f) {
+      if (factorRespondido.value) return
+      factorSeleccion.value = f
+      factorRespondido.value = true
+      if (f === factoresJuego[factorActual.value].factor) factoresAciertos.value++
+    }
+
+    function siguienteFactor() {
+      factorActual.value++
+      factorRespondido.value = false
+      factorSeleccion.value = ''
+    }
+
+    function finalizarFactores() {
+      factoresTerminado.value = true
+    }
+
+    function reiniciarFactores() {
+      factorActual.value = 0
+      factorRespondido.value = false
+      factorSeleccion.value = ''
+      factoresAciertos.value = 0
+      factoresTerminado.value = false
+    }
+
     onMounted(() => {
       const revealElements = document.querySelectorAll('.reveal-section')
       scrollObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             gsap.fromTo(entry.target, { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' })
-            const cards = entry.target.querySelectorAll('.factor-card')
+            const cards = entry.target.querySelectorAll('.factor-opcion')
             if (cards.length) {
               gsap.fromTo(cards, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.12, delay: 0.3, ease: 'back.out(1.2)' })
             }
@@ -234,7 +285,7 @@ export default {
       if (scrollObserver) scrollObserver.disconnect()
     })
 
-    return { hoverEstado, transformaciones, detalle, detalleActivo, showDetalle }
+    return { hoverEstado, transformaciones, detalle, detalleActivo, showDetalle, videoUrl, factorOpciones, factoresJuego, factorActual, factorRespondido, factorSeleccion, factoresAciertos, factoresTerminado, factorCorrecto, responderFactor, siguienteFactor, finalizarFactores, reiniciarFactores }
   }
 }
 </script>
@@ -457,42 +508,140 @@ export default {
   color: var(--color-blanco);
 }
 
-.factores-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+.video-contenedor {
+  margin-top: var(--espaciado-mediano);
+  border-radius: var(--radio-borde);
+  overflow: hidden;
+  border: 1px solid rgba(48, 54, 61, 0.5);
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.video-contenedor video {
+  display: block;
+  width: 100%;
+  max-height: 420px;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: #000;
+}
+
+.factores-juego {
+  display: flex;
+  flex-direction: column;
   gap: var(--espaciado-mediano);
 }
 
-.factor-card {
-  background: rgba(255, 255, 255, 0.02);
+.factores-progreso {
+  color: var(--color-primario);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.factores-pregunta {
+  background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(48, 54, 61, 0.4);
   border-radius: var(--radio-borde);
   padding: var(--espaciado-grande);
-  text-align: center;
+  color: var(--color-blanco);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.factores-opciones {
+  display: flex;
+  gap: var(--espaciado-mediano);
+  flex-wrap: wrap;
+}
+
+.factor-opcion {
+  flex: 1;
+  min-width: 150px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(48, 54, 61, 0.5);
+  border-radius: var(--radio-borde);
+  padding: var(--espaciado-mediano);
+  color: var(--color-blanco);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
   transition: var(--transition);
 }
 
-.factor-card:hover {
-  border-color: rgba(46, 125, 50, 0.3);
-  background: rgba(46, 125, 50, 0.03);
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(46, 125, 50, 0.1);
+.factor-opcion:hover:not(:disabled) {
+  border-color: var(--color-primario);
+  background: rgba(46, 125, 50, 0.08);
+  transform: translateY(-3px);
 }
 
-.factor-icono {
-  margin-bottom: var(--espaciado-mediano);
+.factor-opcion.opcion-correcta {
+  border-color: var(--color-exito) !important;
+  background: rgba(63, 185, 80, 0.15) !important;
+  animation: pop 0.3s ease;
 }
 
-.factor-card h4 {
+.factor-opcion.opcion-incorrecta {
+  border-color: var(--color-error) !important;
+  background: rgba(248, 81, 73, 0.15) !important;
+  animation: shake 0.3s ease;
+}
+
+.factor-opcion.opcion-desactivada {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.mensaje-texto {
+  margin-top: var(--espaciado-pequeño);
+  line-height: 1.6;
+}
+
+.factores-avance {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.factores-resultado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espaciado-mediano);
+  padding: var(--espaciado-grande) 0;
+  text-align: center;
+}
+
+.resultado-titulo {
+  color: var(--color-blanco);
+  font-size: 1.3rem;
+}
+
+.resultado-numero {
   color: var(--color-blanco);
   font-size: 1.1rem;
-  margin-bottom: var(--espaciado-pequeño);
 }
 
-.factor-card p {
+.resultado-numero strong {
+  color: var(--color-primario);
+  font-size: 1.4rem;
+}
+
+.resultado-mensaje {
   color: var(--color-texto-claro);
-  font-size: 0.85rem;
   line-height: 1.6;
+  max-width: 480px;
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
 }
 
 .navegacion {
@@ -511,8 +660,8 @@ export default {
   .detalle-body {
     grid-template-columns: 1fr;
   }
-  .factores-grid {
-    grid-template-columns: 1fr;
+  .factores-opciones {
+    flex-direction: column;
   }
   .navegacion {
     flex-direction: column;
