@@ -763,13 +763,15 @@ select option {
 .opcion-vf-label {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   cursor: pointer;
-  padding: 8px 16px;
+  padding: 12px 20px;
   border-radius: 8px;
   border: 1px solid rgba(48, 54, 61, 0.5);
   transition: var(--transition);
   color: var(--color-texto-claro);
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .opcion-vf-label:hover {
@@ -779,8 +781,8 @@ select option {
 
 .opcion-vf-label input[type="radio"] {
   accent-color: var(--color-primario);
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
 }
 
 .icono-vf {
