@@ -84,11 +84,59 @@
             </div>
           </div>
         </div>
+      </section>
 
-        <div v-if="!completado" class="navegacion">
-          <router-link to="/paso2" class="boton boton-secundario">← Paso 2</router-link>
+      <section class="tarjeta reveal-section">
+        <h2 class="titulo-seccion">Juego: ¿Qué factor interviene?</h2>
+        <p class="intro-descripcion">Cada situación describe un cambio de estado de la vida diaria. Elige cuál de los tres factores (temperatura, presión o energía) es el que lo provoca.</p>
+
+        <div v-if="!factoresTerminado" class="factores-juego">
+          <div class="factores-progreso">Situación {{ factorActual + 1 }} de {{ factoresJuego.length }}</div>
+          <div class="factores-pregunta">{{ factoresJuego[factorActual].situacion }}</div>
+          <div class="factores-opciones">
+            <button
+              v-for="f in factorOpciones"
+              :key="f"
+              class="factor-opcion"
+              :class="{
+                'opcion-correcta': factorRespondido && f === factoresJuego[factorActual].factor,
+                'opcion-incorrecta': factorRespondido && factorSeleccion === f && f !== factoresJuego[factorActual].factor,
+                'opcion-desactivada': factorRespondido && f !== factorSeleccion
+              }"
+              :disabled="factorRespondido"
+              @click="responderFactor(f)"
+            >
+              {{ f }}
+            </button>
+          </div>
+          <div v-if="factorRespondido" class="mensaje" :class="factorCorrecto ? 'mensaje-exito' : 'mensaje-error'">
+            <strong>{{ factorCorrecto ? '¡Correcto!' : 'Incorrecto' }}</strong>
+            <p class="mensaje-texto">{{ factoresJuego[factorActual].explicacion }}</p>
+          </div>
+          <div v-if="factorRespondido" class="factores-avance">
+            <button v-if="factorActual < factoresJuego.length - 1" class="boton boton-principal" @click="siguienteFactor">Siguiente situación →</button>
+            <button v-else class="boton boton-principal" @click="finalizarFactores">Ver resultado</button>
+          </div>
+        </div>
+
+        <div v-else class="factores-resultado">
+          <h3 class="resultado-titulo">Resultado del juego</h3>
+          <p class="resultado-numero">Acertaste <strong>{{ factoresAciertos }}</strong> de {{ factoresJuego.length }} situaciones</p>
+          <p class="resultado-mensaje">
+            {{ factoresAciertos === factoresJuego.length
+              ? '¡Perfecto! Domina los tres factores que provocan los cambios de estado.'
+              : factoresAciertos >= 4
+                ? 'Buen trabajo. Repasa las explicaciones de las situaciones que fallaste.'
+                : 'Repasa el Paso 2 y vuelve a intentarlo.' }}
+          </p>
+          <button class="boton boton-secundario" @click="reiniciarFactores">Jugar de nuevo</button>
         </div>
       </section>
+
+      <div class="navegacion">
+        <router-link to="/paso2" class="boton boton-secundario">← Paso 2</router-link>
+        <router-link to="/paso4" class="boton boton-principal">Paso 4: Evaluacion →</router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -259,16 +307,73 @@ export default {
       definiciones.value.forEach(d => { d.emparejadoCon = null; d.resultado = null })
     }
 
+    const factorOpciones = ['Temperatura', 'Presión', 'Energía']
+    const factoresJuego = [
+      { situacion: 'Un cubo de hielo se derrite al sacarlo de la nevera.', factor: 'Temperatura', explicacion: 'A temperatura ambiente el hielo gana calor y sus partículas se mueven hasta fundirse.' },
+      { situacion: 'El agua hierve a menos de 100°C en la cima de una montaña.', factor: 'Presión', explicacion: 'A menor presión atmosférica, las partículas escapan con menos energía y el agua hierve antes.' },
+      { situacion: 'La ropa mojada se seca tendida al sol.', factor: 'Energía', explicacion: 'La energía calorífica del sol hace que las partículas del agua pasen al aire como vapor.' },
+      { situacion: 'La escarcha se forma en las ventanas en invierno.', factor: 'Temperatura', explicacion: 'La baja temperatura hace que el vapor del ambiente se congele directo en cristales.' },
+      { situacion: 'Una olla a presión cocina los alimentos más rápido.', factor: 'Presión', explicacion: 'Al aumentar la presión, el agua hierve a mayor temperatura y la cocción es más rápida.' },
+      { situacion: 'El vapor de la ducha empaña el espejo del baño.', factor: 'Temperatura', explicacion: 'El vapor toca la superficie fría del espejo, pierde energía y se condensa en gotitas.' }
+    ]
+    const factorActual = ref(0)
+    const factorRespondido = ref(false)
+    const factorSeleccion = ref('')
+    const factoresAciertos = ref(0)
+    const factoresTerminado = ref(false)
+
+    const factorCorrecto = computed(() => factorSeleccion.value === factoresJuego[factorActual.value].factor)
+
+    function responderFactor(f) {
+      if (factorRespondido.value) return
+      factorSeleccion.value = f
+      factorRespondido.value = true
+      if (f === factoresJuego[factorActual.value].factor) factoresAciertos.value++
+    }
+
+    function siguienteFactor() {
+      factorActual.value++
+      factorRespondido.value = false
+      factorSeleccion.value = ''
+    }
+
+    function finalizarFactores() {
+      factoresTerminado.value = true
+    }
+
+    function reiniciarFactores() {
+      factorActual.value = 0
+      factorRespondido.value = false
+      factorSeleccion.value = ''
+      factoresAciertos.value = 0
+      factoresTerminado.value = false
+    }
+
     onMounted(() => {
       const cards = document.querySelectorAll('.tarjeta-arrastrable')
       gsap.fromTo(cards, { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.5, stagger: 0.1, delay: 0.3 })
+
+      const revealElements = document.querySelectorAll('.reveal-section')
+      scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            gsap.fromTo(entry.target, { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' })
+            const opts = entry.target.querySelectorAll('.factor-opcion')
+            if (opts.length) {
+              gsap.fromTo(opts, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.12, delay: 0.3, ease: 'back.out(1.2)' })
+            }
+            scrollObserver.unobserve(entry.target)
+          }
+        })
+      }, { threshold: 0.15 })
+      revealElements.forEach(el => scrollObserver.observe(el))
     })
 
     onBeforeUnmount(() => {
       if (scrollObserver) scrollObserver.disconnect()
     })
 
-    return { items, definiciones, aciertos, intentos, completado, dropActivo, onDragStart, onDragEnd, onDragEnter, onDragLeave, onDrop, onTouchStart, onTouchMove, onTouchEnd, reiniciar }
+    return { items, definiciones, aciertos, intentos, completado, dropActivo, onDragStart, onDragEnd, onDragEnter, onDragLeave, onDrop, onTouchStart, onTouchMove, onTouchEnd, reiniciar, factorOpciones, factoresJuego, factorActual, factorRespondido, factorSeleccion, factoresAciertos, factoresTerminado, factorCorrecto, responderFactor, siguienteFactor, finalizarFactores, reiniciarFactores }
   }
 }
 </script>
@@ -436,6 +541,113 @@ export default {
   flex-shrink: 0;
 }
 
+.factores-juego {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaciado-mediano);
+}
+
+.factores-progreso {
+  color: var(--color-primario);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.factores-pregunta {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(48, 54, 61, 0.4);
+  border-radius: var(--radio-borde);
+  padding: var(--espaciado-grande);
+  color: var(--color-blanco);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.factores-opciones {
+  display: flex;
+  gap: var(--espaciado-mediano);
+  flex-wrap: wrap;
+}
+
+.factor-opcion {
+  flex: 1;
+  min-width: 150px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(48, 54, 61, 0.5);
+  border-radius: var(--radio-borde);
+  padding: var(--espaciado-mediano);
+  color: var(--color-blanco);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.factor-opcion:hover:not(:disabled) {
+  border-color: var(--color-primario);
+  background: rgba(46, 125, 50, 0.08);
+  transform: translateY(-3px);
+}
+
+.factor-opcion.opcion-correcta {
+  border-color: var(--color-exito) !important;
+  background: rgba(63, 185, 80, 0.15) !important;
+  animation: pop 0.3s ease;
+}
+
+.factor-opcion.opcion-incorrecta {
+  border-color: var(--color-error) !important;
+  background: rgba(248, 81, 73, 0.15) !important;
+  animation: shake 0.3s ease;
+}
+
+.factor-opcion.opcion-desactivada {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.mensaje-texto {
+  margin-top: var(--espaciado-pequeño);
+  line-height: 1.6;
+}
+
+.factores-avance {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.factores-resultado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espaciado-mediano);
+  padding: var(--espaciado-grande) 0;
+  text-align: center;
+}
+
+.resultado-titulo {
+  color: var(--color-blanco);
+  font-size: 1.3rem;
+}
+
+.resultado-numero {
+  color: var(--color-blanco);
+  font-size: 1.1rem;
+}
+
+.resultado-numero strong {
+  color: var(--color-primario);
+  font-size: 1.4rem;
+}
+
+.resultado-mensaje {
+  color: var(--color-texto-claro);
+  line-height: 1.6;
+  max-width: 480px;
+}
+
 .resultado-final {
   margin-top: var(--espaciado-enorme);
   animation: slideUp 0.5s ease;
@@ -492,6 +704,10 @@ export default {
   .juego-header {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .factores-opciones {
+    flex-direction: column;
   }
 
   .contenedor-drop {
