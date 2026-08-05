@@ -3,6 +3,45 @@
     <ParticleBackground color="#1565c0" :count="40" :speed="0.3" />
     <ProgressBar :paso-actual="2" />
 
+    <transition name="modal">
+      <div v-if="detalleActivo" class="modal-overlay" @click.self="detalleActivo = false">
+        <div class="modal-contenido">
+          <button class="modal-cerrar" @click="detalleActivo = false" aria-label="Cerrar">×</button>
+          <div class="detalle-header">
+            <h2 class="titulo-seccion">{{ detalle.nombre }}</h2>
+            <span class="detalle-tag" :class="detalle.tipoClase">{{ detalle.tipo }}</span>
+          </div>
+          <div class="detalle-body">
+            <div class="detalle-visual">
+              <svg viewBox="0 0 320 100" class="detalle-svg">
+                <g v-html="detalle.svg"></g>
+              </svg>
+            </div>
+            <div class="detalle-info">
+              <div class="detalle-transicion">
+                <span class="detalle-desde">{{ detalle.desde }}</span>
+                <span class="detalle-flecha">
+                  <svg width="28" height="14" viewBox="0 0 28 14"><path d="M0 7h22M18 2l6 5-6 5" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <span class="detalle-hacia">{{ detalle.hacia }}</span>
+              </div>
+              <p class="detalle-desc">{{ detalle.descripcion }}</p>
+              <div class="detalle-ejemplo">
+                <div class="detalle-ejemplo-icono">
+                  <svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" stroke="#ff6f00" stroke-width="2" fill="none"/><text x="10" y="14" fill="#ff6f00" font-size="12" text-anchor="middle" font-weight="bold">i</text></svg>
+                </div>
+                <div>
+                  <strong>Ejemplo cotidiano:</strong>
+                  <p>{{ detalle.ejemplo }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="detalle-cerrar" @click="detalleActivo = false">Cerrar</button>
+        </div>
+      </div>
+    </transition>
+
     <div class="contenido-interior">
       <section class="tarjeta reveal-section">
         <h2 class="titulo-seccion">Las 6 Transformaciones de la Materia</h2>
@@ -96,44 +135,16 @@
         </div>
       </section>
 
-      <section class="tarjeta detalle-section" v-if="detalleActivo">
-        <div class="detalle-header">
-          <h2 class="titulo-seccion">{{ detalle.nombre }}</h2>
-          <span class="detalle-tag" :class="detalle.tipoClase">{{ detalle.tipo }}</span>
-        </div>
-        <div class="detalle-body">
-          <div class="detalle-visual">
-            <svg viewBox="0 0 320 100" class="detalle-svg">
-              <g v-html="detalle.svg"></g>
-            </svg>
-          </div>
-          <div class="detalle-info">
-            <div class="detalle-transicion">
-              <span class="detalle-desde">{{ detalle.desde }}</span>
-              <span class="detalle-flecha">
-                <svg width="28" height="14" viewBox="0 0 28 14"><path d="M0 7h22M18 2l6 5-6 5" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-              <span class="detalle-hacia">{{ detalle.hacia }}</span>
-            </div>
-            <p class="detalle-desc">{{ detalle.descripcion }}</p>
-            <div class="detalle-ejemplo">
-              <div class="detalle-ejemplo-icono">
-                <svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" stroke="#ff6f00" stroke-width="2" fill="none"/><text x="10" y="14" fill="#ff6f00" font-size="12" text-anchor="middle" font-weight="bold">i</text></svg>
-              </div>
-              <div>
-                <strong>Ejemplo cotidiano:</strong>
-                <p>{{ detalle.ejemplo }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <button class="detalle-cerrar" @click="detalleActivo = false">Cerrar</button>
-      </section>
-
       <section class="tarjeta reveal-section">
         <h2 class="titulo-seccion">Simulador interactivo</h2>
         <p class="intro-descripcion">Ajusta la temperatura con los botones y observa como cambia el comportamiento de las particulas.</p>
         <ParticleSimulator />
+      </section>
+
+      <section class="tarjeta reveal-section">
+        <h2 class="titulo-seccion">Ruleta de participación</h2>
+        <p class="intro-descripcion">Gira la ruleta para elegir al azar un compañero del salón. No se repite hasta que pasan todos.</p>
+        <Ruleta />
       </section>
 
       <div class="navegacion">
@@ -150,11 +161,12 @@ import gsap from 'gsap'
 import ParticleBackground from '../components/ParticleBackground.vue'
 import ProgressBar from '../components/ProgressBar.vue'
 import ParticleSimulator from '../components/ParticleSimulator.vue'
+import Ruleta from '../components/Ruleta.vue'
 import videoUrl from '../assets/videos/Cambios_de_la_materia.mp4'
 
 export default {
   name: 'Paso2View',
-  components: { ParticleBackground, ProgressBar, ParticleSimulator },
+  components: { ParticleBackground, ProgressBar, ParticleSimulator, Ruleta },
   setup() {
     const hoverEstado = ref(null)
     const detalleActivo = ref(false)
@@ -307,9 +319,67 @@ export default {
 .trans-calor .trans-energia { color: #ff6f00; }
 .trans-frio .trans-energia { color: #58a6ff; }
 
-.detalle-section {
-  margin-top: var(--espaciado-grande);
-  animation: slideUp 0.4s ease;
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(5, 10, 15, 0.78);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--espaciado-mediano);
+}
+
+.modal-contenido {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background-color: var(--color-fondo-card);
+  border: 1px solid rgba(48, 54, 61, 0.6);
+  border-radius: var(--radio-borde);
+  padding: var(--espaciado-grande);
+  box-shadow: var(--sombra);
+}
+
+.modal-cerrar {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(48, 54, 61, 0.6);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-texto-claro);
+  font-size: 1.15rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-cerrar:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--color-blanco);
+}
+
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.25s ease;
+}
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+}
+
+.modal-enter-active .modal-contenido {
+  animation: slideUp 0.35s ease;
 }
 
 .detalle-header {
@@ -398,7 +468,8 @@ export default {
 }
 
 .detalle-cerrar {
-  margin-top: var(--espaciado-mediano);
+  display: block;
+  margin: var(--espaciado-mediano) auto 0;
   padding: 10px var(--espaciado-grande);
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(48, 54, 61, 0.5);
