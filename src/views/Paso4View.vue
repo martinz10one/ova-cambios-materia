@@ -5,11 +5,32 @@
 
     <div class="contenido-interior">
       <section class="tarjeta">
-        <h2 class="titulo-seccion">Evaluación: Emparejamiento</h2>
+        <div class="titulo-seccion-row">
+          <h2 class="titulo-seccion">Evaluación: Emparejamiento</h2>
+          <button
+            class="boton-icono-ruleta"
+            :class="{ activo: mostrarRuleta }"
+            :title="mostrarRuleta ? 'Ocultar ruleta' : 'Mostrar ruleta'"
+            aria-label="Ruleta de participación"
+            @click="mostrarRuleta = !mostrarRuleta"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M12 3 L12 21 M3 12 L21 12 M6.8 6.8 L17.2 17.2 M17.2 6.8 L6.8 17.2" stroke="currentColor" stroke-width="1.3"/>
+              <path d="M12 3 L14 9 L10 9 Z" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
         <p class="intro-descripcion">
           Selecciona la definición correcta para cada concepto. Al terminar, pulsa
           <strong>Verificar respuestas</strong> para conocer tu resultado.
         </p>
+
+        <transition name="ruleta">
+          <div v-if="mostrarRuleta" class="ruleta-contenedor">
+            <Ruleta />
+          </div>
+        </transition>
 
         <div class="juego-header">
           <div class="juego-info">
@@ -134,10 +155,11 @@ import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import gsap from 'gsap'
 import ParticleBackground from '../components/ParticleBackground.vue'
 import ProgressBar from '../components/ProgressBar.vue'
+import Ruleta from '../components/Ruleta.vue'
 
 export default {
   name: 'Paso4View',
-  components: { ParticleBackground, ProgressBar },
+  components: { ParticleBackground, ProgressBar, Ruleta },
   setup() {
     const opcionesEmparejamiento = [
       'Paso de sólido a líquido al ganar calor',
@@ -169,6 +191,7 @@ export default {
 
     const verificadoEmparejamiento = ref(false)
     const aciertosEmparejamiento = ref(0)
+    const mostrarRuleta = ref(false)
 
     const opcionesUsadas = computed(() => new Set(emparejamiento.value.filter(i => i.seleccion !== null).map(i => i.seleccion)))
 
@@ -279,13 +302,62 @@ export default {
       reiniciarEmparejamiento,
       alEditarEmparejamiento,
       responderVf,
-      reiniciarVf
+      reiniciarVf,
+      mostrarRuleta
     }
   }
 }
 </script>
 
 <style scoped>
+.titulo-seccion-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaciado-mediano);
+}
+
+.boton-icono-ruleta {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(48, 54, 61, 0.6);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-accento);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.boton-icono-ruleta:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-blanco);
+  transform: rotate(90deg);
+}
+
+.boton-icono-ruleta.activo {
+  background: rgba(255, 111, 0, 0.15);
+  border-color: rgba(255, 111, 0, 0.5);
+}
+
+.ruleta-contenedor {
+  margin-bottom: var(--espaciado-grande);
+}
+
+.ruleta-enter-active,
+.ruleta-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.ruleta-enter-from,
+.ruleta-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
 .opcion-vf-label.seleccionada {
   border-color: var(--color-secundario);
   background: rgba(21, 101, 192, 0.15);
