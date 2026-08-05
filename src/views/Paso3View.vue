@@ -10,7 +10,7 @@
 
         <div class="juego-header">
           <div class="juego-info">
-            <span class="juego-score">Aciertos: {{ aciertos }}/6</span>
+            <span class="juego-score" :class="{ 'todo-correcto': completado }">Aciertos: {{ aciertos }}/6</span>
             <span class="juego-intentos">Intentos: {{ intentos }}</span>
           </div>
           <button class="boton boton-secundario" @click="reiniciar">Reiniciar</button>
@@ -78,10 +78,7 @@
             </div>
             <h3>Completaste la actividad!</h3>
             <p>Aciertos: {{ aciertos }}/6 | Intentos: {{ intentos }}</p>
-            <div class="opciones-navegacion">
-              <router-link to="/paso2" class="boton boton-secundario">← Paso 2</router-link>
-              <router-link to="/paso4" class="boton boton-principal">Paso 4: Evaluacion →</router-link>
-            </div>
+            <p class="resultado-siguiente">Continúa con el juego de factores de abajo para desbloquear el Paso 4.</p>
           </div>
         </div>
       </section>
@@ -135,7 +132,8 @@
 
       <div class="navegacion">
         <router-link to="/paso2" class="boton boton-secundario">← Paso 2</router-link>
-        <router-link to="/paso4" class="boton boton-principal">Paso 4: Evaluacion →</router-link>
+        <router-link v-if="factoresTerminado" to="/paso4" class="boton boton-principal">Paso 4: Evaluacion →</router-link>
+        <span v-else class="bloqueo-paso4">Completa el juego de factores para desbloquear el Paso 4</span>
       </div>
     </div>
   </div>
@@ -407,6 +405,11 @@ export default {
   color: var(--color-exito);
 }
 
+.juego-score.todo-correcto {
+  background: rgba(63, 185, 80, 0.25);
+  animation: pop 0.4s ease;
+}
+
 .juego-intentos {
   font-size: 1rem;
   font-weight: 600;
@@ -675,6 +678,20 @@ export default {
   color: var(--color-texto-claro);
   font-size: 1rem;
   margin-bottom: var(--espaciado-grande);
+}
+
+.resultado-siguiente {
+  color: var(--color-primario) !important;
+  font-size: 0.9rem !important;
+  font-weight: 600;
+}
+
+.bloqueo-paso4 {
+  color: var(--color-texto-claro);
+  font-size: 0.9rem;
+  opacity: 0.7;
+  display: inline-flex;
+  align-items: center;
 }
 
 .opciones-navegacion {
