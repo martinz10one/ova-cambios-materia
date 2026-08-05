@@ -141,12 +141,6 @@
         <ParticleSimulator />
       </section>
 
-      <section class="tarjeta reveal-section">
-        <h2 class="titulo-seccion">Ruleta de participación</h2>
-        <p class="intro-descripcion">Gira la ruleta para elegir al azar un compañero del salón. No se repite hasta que pasan todos.</p>
-        <Ruleta />
-      </section>
-
       <div class="navegacion">
         <router-link to="/" class="boton boton-secundario">← Paso 1: Intro</router-link>
         <router-link to="/paso3" class="boton boton-principal">Paso 3: Actividad →</router-link>
@@ -161,12 +155,11 @@ import gsap from 'gsap'
 import ParticleBackground from '../components/ParticleBackground.vue'
 import ProgressBar from '../components/ProgressBar.vue'
 import ParticleSimulator from '../components/ParticleSimulator.vue'
-import Ruleta from '../components/Ruleta.vue'
 import videoUrl from '../assets/videos/Cambios_de_la_materia.mp4'
 
 export default {
   name: 'Paso2View',
-  components: { ParticleBackground, ProgressBar, ParticleSimulator, Ruleta },
+  components: { ParticleBackground, ProgressBar, ParticleSimulator },
   setup() {
     const hoverEstado = ref(null)
     const detalleActivo = ref(false)

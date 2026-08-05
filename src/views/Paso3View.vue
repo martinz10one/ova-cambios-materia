@@ -130,6 +130,12 @@
         </div>
       </section>
 
+      <section class="tarjeta reveal-section">
+        <h2 class="titulo-seccion">Ruleta de participación</h2>
+        <p class="intro-descripcion">Gira la ruleta para elegir al azar un compañero del salón. No se repite hasta que pasan todos.</p>
+        <Ruleta />
+      </section>
+
       <div class="navegacion">
         <router-link to="/paso2" class="boton boton-secundario">← Paso 2</router-link>
         <router-link v-if="factoresTerminado" to="/paso4" class="boton boton-principal">Paso 4: Evaluacion →</router-link>
@@ -144,10 +150,11 @@ import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import gsap from 'gsap'
 import ParticleBackground from '../components/ParticleBackground.vue'
 import ProgressBar from '../components/ProgressBar.vue'
+import Ruleta from '../components/Ruleta.vue'
 
 export default {
   name: 'Paso3View',
-  components: { ParticleBackground, ProgressBar },
+  components: { ParticleBackground, ProgressBar, Ruleta },
   setup() {
     const aciertos = ref(0)
     const intentos = ref(0)
