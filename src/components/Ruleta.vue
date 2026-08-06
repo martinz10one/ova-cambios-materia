@@ -109,7 +109,7 @@ export default {
       const step = 360 / NOMBRES.length
       const segMid = (idx + 0.5) * step
       const destino = 360 - segMid
-      const total = rotacion.value + destino + 360 * (4 + Math.floor(Math.random() * 3)) + (Math.random() * 10 - 5)
+      const total = 360 * (4 + Math.floor(Math.random() * 3)) + destino + (Math.random() * 10 - 5)
       girando.value = true
       gsap.to(rotacion, {
         value: total,
