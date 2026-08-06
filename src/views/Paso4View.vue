@@ -193,7 +193,7 @@ export default {
     const aciertosEmparejamiento = ref(0)
     const mostrarRuleta = ref(false)
 
-    const opcionesBloqueadas = computed(() => new Set(emparejamiento.value.filter(i => i.resultado === 'correcto').map(i => i.seleccion)))
+    const opcionesBloqueadas = computed(() => new Set(emparejamiento.value.filter(i => i.seleccion !== null).map(i => i.seleccion)))
 
     const mensajeResultado = computed(() => {
       const a = aciertosEmparejamiento.value
