@@ -56,12 +56,12 @@
             <div class="columna-flecha">→</div>
             <div class="columna-emparejar">
               <select v-model="item.seleccion" :disabled="item.resultado === 'correcto'" @change="alEditarEmparejamiento(item)">
-                <option :value="null" disabled>Selecciona una opción</option>
+                <option :value="null">Selecciona una opción</option>
                 <option
                   v-for="optIdx in opcionesMezcladas"
                   :key="optIdx"
                   :value="optIdx"
-                  :disabled="opcionesUsadas.has(optIdx) && item.seleccion !== optIdx"
+                  :disabled="opcionesBloqueadas.has(optIdx) && item.seleccion !== optIdx"
                 >
                   {{ opcionesEmparejamiento[optIdx] }}
                 </option>
@@ -193,7 +193,7 @@ export default {
     const aciertosEmparejamiento = ref(0)
     const mostrarRuleta = ref(false)
 
-    const opcionesUsadas = computed(() => new Set(emparejamiento.value.filter(i => i.seleccion !== null).map(i => i.seleccion)))
+    const opcionesBloqueadas = computed(() => new Set(emparejamiento.value.filter(i => i.resultado === 'correcto').map(i => i.seleccion)))
 
     const mensajeResultado = computed(() => {
       const a = aciertosEmparejamiento.value
@@ -240,6 +240,13 @@ export default {
     }
 
     function alEditarEmparejamiento(item) {
+      if (item.seleccion !== null) {
+        const duplicado = emparejamiento.value.find(o => o !== item && o.seleccion === item.seleccion)
+        if (duplicado) {
+          duplicado.seleccion = null
+          duplicado.resultado = null
+        }
+      }
       if (!verificadoEmparejamiento.value) return
       item.resultado = null
       verificadoEmparejamiento.value = false
@@ -290,7 +297,7 @@ export default {
       opcionesEmparejamiento,
       opcionesMezcladas,
       emparejamiento,
-      opcionesUsadas,
+      opcionesBloqueadas,
       verificadoEmparejamiento,
       aciertosEmparejamiento,
       mensajeResultado,
